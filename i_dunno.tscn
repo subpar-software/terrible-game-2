@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://byp4pnenghnq"]
+
+[ext_resource type="Texture2D" uid="uid://dg8ay68aeyr2e" path="res://icon.svg" id="1_w4iu3"]
+[ext_resource type="Script" path="res://IDunno.gd" id="2_n7gmt"]
+
+[node name="IDunno" type="Sprite2D" groups=["IDunno"]]
+position = Vector2(575, 338)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_w4iu3")
+script = ExtResource("2_n7gmt")
+
+[node name="HourHand" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 1.5)
+texture = ExtResource("1_w4iu3")
+offset = Vector2(0, -50)
+
+[node name="WhereThePewHappens" type="Node2D" parent="HourHand"]
+position = Vector2(0, -114)
+
+[node name="FireRate" type="Timer" parent="HourHand"]
+wait_time = 0.25
+one_shot = true
+
+[node name="MinuteHand" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 2)
+texture = ExtResource("1_w4iu3")
+offset = Vector2(0, -50)
+
+[node name="WhereThePewHappens" type="Node2D" parent="MinuteHand"]
+position = Vector2(0, -114)
+
+[node name="FireRate" type="Timer" parent="MinuteHand"]
+wait_time = 0.1
+one_shot = true
+
+[node name="SecondHand" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(0.992157, 0, 0, 1)
+rotation = 6.28319
+scale = Vector2(0.03, 2)
+texture = ExtResource("1_w4iu3")
+offset = Vector2(0, -50)
+
+[connection signal="timeout" from="HourHand/FireRate" to="." method="_on_hour_fire_rate_timeout"]
+[connection signal="timeout" from="MinuteHand/FireRate" to="." method="_on_minute_fire_rate_timeout"]

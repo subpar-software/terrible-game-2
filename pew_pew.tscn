@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://c2tvlusd36b78"]
+
+[ext_resource type="Shader" path="res://pewpew.gdshader" id="1_n7s3m"]
+[ext_resource type="Script" path="res://pew_pew.gd" id="2_a5fk2"]
+[ext_resource type="Texture2D" uid="uid://dg8ay68aeyr2e" path="res://icon.svg" id="3_o7ctp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_icqgq"]
+shader = ExtResource("1_n7s3m")
+shader_parameter/speed = 1.0
+shader_parameter/tint = Vector4(1, 1, 0, 1)
+shader_parameter/span = 0.3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_og86f"]
+shader = ExtResource("1_n7s3m")
+shader_parameter/speed = 1.0
+shader_parameter/tint = Vector4(1, 1, 0, 1)
+shader_parameter/span = 0.5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f7cpb"]
+
+[node name="SmallPewPew" type="Area2D"]
+material = SubResource("ShaderMaterial_icqgq")
+script = ExtResource("2_a5fk2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_og86f")
+texture = ExtResource("3_o7ctp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_f7cpb")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

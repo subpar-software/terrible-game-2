@@ -1,0 +1,74 @@
+[gd_scene load_steps=3 format=3 uid="uid://ml81ns4ra6gt"]
+
+[ext_resource type="Script" path="res://game.gd" id="1_3x00i"]
+[ext_resource type="PackedScene" uid="uid://byp4pnenghnq" path="res://i_dunno.tscn" id="2_8pdvg"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_3x00i")
+
+[node name="CrappyUI" type="Node2D" parent="."]
+position = Vector2(12, 7)
+
+[node name="HourCountLabel" type="Label" parent="CrappyUI"]
+offset_right = 60.0
+offset_bottom = 26.0
+text = "Hour: 0
+"
+
+[node name="MinuteCountLabel" type="Label" parent="CrappyUI"]
+offset_top = 25.0
+offset_right = 73.0
+offset_bottom = 51.0
+text = "Minute: 0"
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="Point1" type="Node2D" parent="SpawnPoints"]
+position = Vector2(916, -147)
+
+[node name="Point2" type="Node2D" parent="SpawnPoints"]
+position = Vector2(1259, 131)
+
+[node name="Point3" type="Node2D" parent="SpawnPoints"]
+position = Vector2(1325, 344)
+
+[node name="Point4" type="Node2D" parent="SpawnPoints"]
+position = Vector2(1264, 605)
+
+[node name="Point5" type="Node2D" parent="SpawnPoints"]
+position = Vector2(1019, 834)
+
+[node name="Point6" type="Node2D" parent="SpawnPoints"]
+position = Vector2(595, 879)
+
+[node name="Point7" type="Node2D" parent="SpawnPoints"]
+position = Vector2(256, 744)
+
+[node name="Point8" type="Node2D" parent="SpawnPoints"]
+position = Vector2(-55, 565)
+
+[node name="Point9" type="Node2D" parent="SpawnPoints"]
+position = Vector2(-149, 320)
+
+[node name="Point10" type="Node2D" parent="SpawnPoints"]
+position = Vector2(-45, 86)
+
+[node name="Point11" type="Node2D" parent="SpawnPoints"]
+position = Vector2(220, -145)
+
+[node name="Point12" type="Node2D" parent="SpawnPoints"]
+position = Vector2(577, -253)
+
+[node name="IDunno" parent="." instance=ExtResource("2_8pdvg")]
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="SpawnRate" type="Timer" parent="Timers"]
+autostart = true
+
+[node name="SpawnMove" type="Timer" parent="Timers"]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timers/SpawnRate" to="." method="_on_spawn_rate_timeout"]
+[connection signal="timeout" from="Timers/SpawnMove" to="." method="_on_spawn_move_timeout"]
