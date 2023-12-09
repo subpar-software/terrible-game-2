@@ -22,8 +22,6 @@ var prev_game_state: Constants.GameState = Constants.GameState.START
 @onready var spawn_rate_timer: Timer = $Timers/SpawnRate
 @onready var spawn_move_timer: Timer = $Timers/SpawnMove
 
-@onready var convert_button: Button = $PlayUI/ConvertButton
-
 var rng = RandomNumberGenerator.new()
 
 var dont_like_this_dude = preload("res://baddie.tscn")
@@ -59,10 +57,6 @@ func _process(_delta):
 				spawn_move_timer.stop()
 				for baddie in get_tree().get_nodes_in_group("baddies"):
 					baddie.queue_free()
-
-	convert_button.disabled = false
-	if defender.hour_count == 0:
-		convert_button.disabled = true
 	
 	prev_game_state = game_state
 	$PlayUI/BaddiesCountLabel.text = "Baddies Count: " +  str(Globals.current_baddies)
@@ -91,3 +85,11 @@ func _on_defender_dead():
 
 func _on_convert_button_pressed():
 	defender.convert_hours_to_health()
+
+
+func _on_defender_action_surge_begin():
+	$Camera2D.shake = true
+
+
+func _on_defender_action_surge_end():
+	$Camera2D.shake = false

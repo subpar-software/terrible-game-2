@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://ml81ns4ra6gt"]
+[gd_scene load_steps=15 format=3 uid="uid://ml81ns4ra6gt"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_3x00i"]
 [ext_resource type="Texture2D" uid="uid://dg8ay68aeyr2e" path="res://images/icon.svg" id="2_5ysxq"]
 [ext_resource type="PackedScene" uid="uid://byp4pnenghnq" path="res://defender.tscn" id="2_8pdvg"]
 [ext_resource type="AudioStream" uid="uid://b06f43m3386ao" path="res://music/background-loop-straight-04-2699.mp3" id="2_j5vwr"]
+[ext_resource type="Script" path="res://camera_2d.gd" id="2_lavrl"]
 [ext_resource type="AudioStream" uid="uid://xtuqwoeajnef" path="res://music/the-80s-retrowave-synthwave-143303.mp3" id="3_3ae7o"]
 [ext_resource type="Script" path="res://menu-ui.gd" id="3_y8sev"]
 [ext_resource type="Script" path="res://elapsed_time.gd" id="5_pfu6u"]
@@ -28,19 +29,26 @@ texture = ExtResource("2_5ysxq")
 region_rect = Rect2(0, 0, 128, 18)
 modulate_color = Color(0.384314, 0.384314, 0.384314, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sagk1"]
+shader = ExtResource("5_pqr8e")
+shader_parameter/strength = 0.5
+shader_parameter/speed = 0.5
+shader_parameter/angle = 15.0
+
 [node name="Game" type="Node2D"]
 script = ExtResource("1_3x00i")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-2, 0)
 offset = Vector2(576, 324)
+script = ExtResource("2_lavrl")
 
 [node name="Background" type="Sprite2D" parent="."]
 modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 1)
 material = SubResource("CanvasItemMaterial_e4eyg")
 position = Vector2(576, 324)
-scale = Vector2(10, 10)
+scale = Vector2(15, 15)
 texture = ExtResource("2_5ysxq")
 
 [node name="MenuUI" type="Node2D" parent="."]
@@ -101,7 +109,6 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_yogd2")
 text = "Go!"
 
 [node name="PlayUI" type="Node2D" parent="."]
-visible = false
 position = Vector2(12, 7)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="PlayUI"]
@@ -126,13 +133,6 @@ offset_right = 73.0
 offset_bottom = 76.0
 text = "Health: 0"
 
-[node name="ConvertButton" type="Button" parent="PlayUI"]
-offset_left = 83.0
-offset_top = -5.0
-offset_right = 153.0
-offset_bottom = 26.0
-text = "Convert"
-
 [node name="BaddiesCountLabel" type="Label" parent="PlayUI"]
 offset_left = 985.0
 offset_top = 3.0
@@ -146,6 +146,15 @@ offset_top = 28.0
 offset_right = 1115.0
 offset_bottom = 51.0
 text = "Time: 0"
+
+[node name="ActionSurgeLabel" type="RichTextLabel" parent="PlayUI"]
+visible = false
+material = SubResource("ShaderMaterial_sagk1")
+offset_left = 454.0
+offset_top = 2.0
+offset_right = 674.0
+offset_bottom = 38.0
+text = "Press Space for Action Surge"
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 visible = false
@@ -202,7 +211,8 @@ wait_time = 1.5
 wait_time = 5.0
 
 [connection signal="pressed" from="MenuUI/VBoxContainer/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="PlayUI/ConvertButton" to="." method="_on_convert_button_pressed"]
+[connection signal="action_surge_begin" from="Defender" to="." method="_on_defender_action_surge_begin"]
+[connection signal="action_surge_end" from="Defender" to="." method="_on_defender_action_surge_end"]
 [connection signal="dead" from="Defender" to="." method="_on_defender_dead"]
 [connection signal="timeout" from="Timers/SpawnRate" to="." method="_on_spawn_rate_timeout"]
 [connection signal="timeout" from="Timers/SpawnMove" to="." method="_on_spawn_move_timeout"]

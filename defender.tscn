@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://byp4pnenghnq"]
+[gd_scene load_steps=10 format=3 uid="uid://byp4pnenghnq"]
 
 [ext_resource type="Shader" path="res://rainbow.gdshader" id="1_gutvf"]
 [ext_resource type="Texture2D" uid="uid://docjdv0ccf7sd" path="res://images/ring.png" id="2_3efd2"]
@@ -15,6 +15,10 @@ shader_parameter/angle = 15.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tk8wn"]
 radius = 2.0
 height = 90.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yl00m"]
+radius = 4.0
+height = 130.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uh21f"]
 radius = 38.0526
@@ -49,17 +53,22 @@ texture = ExtResource("4_3rv7s")
 offset = Vector2(0, -50)
 
 [node name="WhereThePewHappens" type="Node2D" parent="MinuteHand"]
-position = Vector2(0, -228)
+position = Vector2(0, -112)
 scale = Vector2(0.1, 2)
 
 [node name="FireRate" type="Timer" parent="MinuteHand"]
 wait_time = 0.1
 one_shot = true
 
-[node name="SecondHand" type="Sprite2D" parent="."]
-visible = false
+[node name="SecondHand" type="StaticBody2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SecondHand"]
+position = Vector2(0, -78)
+shape = SubResource("CapsuleShape2D_yl00m")
+
+[node name="SecondHand" type="Sprite2D" parent="SecondHand"]
 modulate = Color(0.992157, 0, 0, 1)
-rotation = 6.28319
 scale = Vector2(0.03, 1.25)
 texture = ExtResource("5_63rt6")
 offset = Vector2(0, -50)
@@ -70,6 +79,12 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_uh21f")
 
+[node name="ActionSurgeTimer" type="Timer" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -10.0
+
 [connection signal="timeout" from="HourHand/FireRate" to="." method="_on_hour_fire_rate_timeout"]
 [connection signal="timeout" from="MinuteHand/FireRate" to="." method="_on_minute_fire_rate_timeout"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="ActionSurgeTimer" to="." method="_on_action_surge_timer_timeout"]
