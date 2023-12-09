@@ -1,24 +1,32 @@
-[gd_scene load_steps=5 format=3 uid="uid://byp4pnenghnq"]
+[gd_scene load_steps=9 format=3 uid="uid://byp4pnenghnq"]
 
-[ext_resource type="Texture2D" uid="uid://dg8ay68aeyr2e" path="res://icon.svg" id="1_w4iu3"]
+[ext_resource type="Shader" path="res://rainbow.gdshader" id="1_gutvf"]
+[ext_resource type="Texture2D" uid="uid://docjdv0ccf7sd" path="res://images/ring.png" id="2_3efd2"]
 [ext_resource type="Script" path="res://defender.gd" id="2_n7gmt"]
+[ext_resource type="Texture2D" uid="uid://fr6jry1umbmx" path="res://images/clock_hand.png" id="4_3rv7s"]
+[ext_resource type="Texture2D" uid="uid://dg8ay68aeyr2e" path="res://images/icon.svg" id="5_63rt6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uvb8h"]
+shader = ExtResource("1_gutvf")
+shader_parameter/strength = 0.5
+shader_parameter/speed = 0.5
+shader_parameter/angle = 15.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tk8wn"]
-radius = 6.0
-height = 232.0
+radius = 2.0
+height = 90.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uh21f"]
-radius = 56.0
+radius = 38.0526
 
 [node name="Defender" type="Sprite2D" groups=["defender"]]
-position = Vector2(575, 338)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_w4iu3")
+material = SubResource("ShaderMaterial_uvb8h")
+texture = ExtResource("2_3efd2")
 script = ExtResource("2_n7gmt")
 
 [node name="HourHand" type="Sprite2D" parent="."]
-scale = Vector2(0.1, 1.5)
-texture = ExtResource("1_w4iu3")
+scale = Vector2(0.5, 0.75)
+texture = ExtResource("4_3rv7s")
 offset = Vector2(0, -50)
 
 [node name="WhereThePewHappens" type="Node2D" parent="HourHand"]
@@ -32,12 +40,12 @@ one_shot = true
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MinuteHand"]
-position = Vector2(0, -114)
+position = Vector2(0, -69)
 shape = SubResource("CapsuleShape2D_tk8wn")
 
 [node name="Sprite2D" type="Sprite2D" parent="MinuteHand"]
-scale = Vector2(0.1, 2)
-texture = ExtResource("1_w4iu3")
+scale = Vector2(0.5, 1.25)
+texture = ExtResource("4_3rv7s")
 offset = Vector2(0, -50)
 
 [node name="WhereThePewHappens" type="Node2D" parent="MinuteHand"]
@@ -52,8 +60,8 @@ one_shot = true
 visible = false
 modulate = Color(0.992157, 0, 0, 1)
 rotation = 6.28319
-scale = Vector2(0.03, 2)
-texture = ExtResource("1_w4iu3")
+scale = Vector2(0.03, 1.25)
+texture = ExtResource("5_63rt6")
 offset = Vector2(0, -50)
 
 [node name="Area2D" type="Area2D" parent="."]

@@ -7,7 +7,7 @@ func init(pew_pew_type: Constants.PewPewType):
 	type = pew_pew_type
 	scale = Vector2(0.08, 0.08)
 	if type == Constants.PewPewType.LARGE:
-		scale = Vector2(0.1, 0.16)
+		scale = Vector2(0.05, 0.08)
 
 func _ready():
 	$Timer.start()

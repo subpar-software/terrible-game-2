@@ -7,7 +7,7 @@ var str_elapsed
 var timing = false
 
 
-func _process(delta):
+func _process(_delta):
 	if (timing):
 		time_now = Time.get_unix_time_from_system()
 		var elapsed = time_now - time_start

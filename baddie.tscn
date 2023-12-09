@@ -1,31 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://1qx03pkk85yk"]
+[gd_scene load_steps=4 format=3 uid="uid://1qx03pkk85yk"]
 
-[ext_resource type="Script" path="res://dont_like_this_dude.gd" id="1_odoqp"]
-[ext_resource type="Shader" path="res://kill_it.gdshader" id="2_cwg8f"]
-[ext_resource type="Texture2D" uid="uid://dg8ay68aeyr2e" path="res://icon.svg" id="3_jdb23"]
+[ext_resource type="Script" path="res://baddie.gd" id="1_etdx7"]
+[ext_resource type="Texture2D" uid="uid://docjdv0ccf7sd" path="res://images/ring.png" id="2_3lhv8"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_aea7u"]
-resource_local_to_scene = true
-shader = ExtResource("2_cwg8f")
-shader_parameter/strength = 0.5
-shader_parameter/speed = 0.5
-shader_parameter/angle = 0.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x35h3"]
-size = Vector2(110, 110)
+[sub_resource type="CircleShape2D" id="CircleShape2D_rtacs"]
+radius = 39.0
 
 [node name="Baddie" type="RigidBody2D" groups=["baddies"]]
+z_index = 2
 collision_layer = 2
 collision_mask = 7
-script = ExtResource("1_odoqp")
+script = ExtResource("1_etdx7")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_aea7u")
-texture = ExtResource("3_jdb23")
+texture = ExtResource("2_3lhv8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 0)
-shape = SubResource("RectangleShape2D_x35h3")
+shape = SubResource("CircleShape2D_rtacs")
 
 [node name="DestroyTimer" type="Timer" parent="."]
 wait_time = 15.0

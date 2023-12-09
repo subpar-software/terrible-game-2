@@ -13,11 +13,15 @@ config_version=5
 config/name="godot-game-2"
 run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://images/icon.svg"
 
 [autoload]
 
 Globals="*res://globals.gd"
+
+[display]
+
+window/size/resizable=false
 
 [layer_names]
 

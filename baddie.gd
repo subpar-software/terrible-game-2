@@ -6,11 +6,9 @@ extends RigidBody2D
 var rng = RandomNumberGenerator.new()
 
 func _ready():
-	$Sprite2D.material.set_shader_parameter("strength", rng.randf_range(0.4, 0.9))
-	$Sprite2D.material.set_shader_parameter("angle", rng.randf_range(0.0, 360.0))
-
 	var size = rng.randf_range(0.2, 0.55)
 	$Sprite2D.scale = Vector2(size, size)
+	$Sprite2D.modulate = Color.from_hsv((randi() % 12) / 12.0, 1, 1)
 	$CollisionShape2D.scale = Vector2(size, size)
 
 	look_at(attack_this.global_position)
