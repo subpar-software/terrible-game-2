@@ -3,8 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://dg8ay68aeyr2e" path="res://icon.svg" id="1_w4iu3"]
 [ext_resource type="Script" path="res://defender.gd" id="2_n7gmt"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fsofi"]
-size = Vector2(20, 248)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tk8wn"]
+radius = 6.0
+height = 232.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uh21f"]
 radius = 56.0
@@ -28,10 +29,11 @@ wait_time = 0.25
 one_shot = true
 
 [node name="MinuteHand" type="StaticBody2D" parent="."]
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MinuteHand"]
 position = Vector2(0, -114)
-shape = SubResource("RectangleShape2D_fsofi")
+shape = SubResource("CapsuleShape2D_tk8wn")
 
 [node name="Sprite2D" type="Sprite2D" parent="MinuteHand"]
 scale = Vector2(0.1, 2)
@@ -55,6 +57,7 @@ texture = ExtResource("1_w4iu3")
 offset = Vector2(0, -50)
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_uh21f")

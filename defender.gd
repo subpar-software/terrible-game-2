@@ -14,7 +14,7 @@ signal dead
 @onready var health_label = $"../PlayUI/HealthLabel"
 
 var max_health = 2
-var curr_health = 0
+var curr_health = max_health
 
 var hour_can_fire = true
 var minute_can_fire = true
@@ -69,14 +69,14 @@ func _physics_process(_delta):
 			pew.global_position = $MinuteHand/WhereThePewHappens.global_position
 			pew.rotation = $MinuteHand.rotation
 
-		if (hour_can_fire):
-			hour_can_fire = false
-			hour_fire_timer.start()
-			var bg_pew = pew_pew.instantiate()
-			bg_pew.init(Constants.PewPewType.LARGE)
-			add_child(bg_pew)
-			bg_pew.global_position = $HourHand/WhereThePewHappens.global_position
-			bg_pew.rotation = $HourHand.rotation
+	if (hour_can_fire):
+		hour_can_fire = false
+		hour_fire_timer.start()
+		var bg_pew = pew_pew.instantiate()
+		bg_pew.init(Constants.PewPewType.LARGE)
+		add_child(bg_pew)
+		bg_pew.global_position = $HourHand/WhereThePewHappens.global_position
+		bg_pew.rotation = $HourHand.rotation
 
 
 func reset():

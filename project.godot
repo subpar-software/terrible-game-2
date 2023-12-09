@@ -19,6 +19,12 @@ config/icon="res://icon.svg"
 
 Globals="*res://globals.gd"
 
+[layer_names]
+
+2d_physics/layer_1="defender"
+2d_physics/layer_2="baddie"
+2d_physics/layer_3="pewpew"
+
 [physics]
 
 2d/default_gravity=0.0

@@ -12,9 +12,11 @@ shader_parameter/speed = 0.5
 shader_parameter/angle = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x35h3"]
-size = Vector2(95.5, 96.5)
+size = Vector2(110, 110)
 
 [node name="Baddie" type="RigidBody2D" groups=["baddies"]]
+collision_layer = 2
+collision_mask = 7
 script = ExtResource("1_odoqp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -22,6 +24,7 @@ material = SubResource("ShaderMaterial_aea7u")
 texture = ExtResource("3_jdb23")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_x35h3")
 
 [node name="DestroyTimer" type="Timer" parent="."]
