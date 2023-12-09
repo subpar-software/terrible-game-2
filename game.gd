@@ -45,10 +45,12 @@ func _process(_delta):
 				defender.reset()
 				spawn_rate_timer.start()
 				spawn_move_timer.start()
+				$ElapsedTime.start_timing()
 
 			Constants.GameState.OVER:
+				$ElapsedTime.stop_timing()
 				$MenuUI.visible = true
-				$MenuUI/VBoxContainer/Button.text = "Try Again"
+				$MenuUI/VBoxContainer/Button.text = $ElapsedTime.str_elapsed + " Try Again"
 				$MenuUI/AudioStreamPlayer.play()
 				$PlayUI.visible = false
 				$PlayUI/AudioStreamPlayer.stop()
