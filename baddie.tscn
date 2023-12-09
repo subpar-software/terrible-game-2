@@ -1,12 +1,12 @@
 [gd_scene load_steps=6 format=3 uid="uid://1qx03pkk85yk"]
 
-[ext_resource type="Script" path="res://dont_like_this_dude.gd" id="1_euyb5"]
-[ext_resource type="Shader" path="res://kill_it.gdshader" id="1_mao48"]
-[ext_resource type="Texture2D" uid="uid://dg8ay68aeyr2e" path="res://icon.svg" id="1_vucu5"]
+[ext_resource type="Script" path="res://dont_like_this_dude.gd" id="1_odoqp"]
+[ext_resource type="Shader" path="res://kill_it.gdshader" id="2_cwg8f"]
+[ext_resource type="Texture2D" uid="uid://dg8ay68aeyr2e" path="res://icon.svg" id="3_jdb23"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_aea7u"]
 resource_local_to_scene = true
-shader = ExtResource("1_mao48")
+shader = ExtResource("2_cwg8f")
 shader_parameter/strength = 0.5
 shader_parameter/speed = 0.5
 shader_parameter/angle = 0.0
@@ -14,14 +14,19 @@ shader_parameter/angle = 0.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x35h3"]
 size = Vector2(95.5, 96.5)
 
-[node name="DontLikeThisDude" type="Area2D" groups=["baddies"]]
-script = ExtResource("1_euyb5")
+[node name="Baddie" type="RigidBody2D" groups=["baddies"]]
+script = ExtResource("1_odoqp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_aea7u")
-texture = ExtResource("1_vucu5")
+texture = ExtResource("3_jdb23")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_x35h3")
 
+[node name="DestroyTimer" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
 [connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
+[connection signal="timeout" from="DestroyTimer" to="." method="_on_destroy_timer_timeout"]

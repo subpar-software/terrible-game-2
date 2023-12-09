@@ -1,9 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://byp4pnenghnq"]
+[gd_scene load_steps=5 format=3 uid="uid://byp4pnenghnq"]
 
 [ext_resource type="Texture2D" uid="uid://dg8ay68aeyr2e" path="res://icon.svg" id="1_w4iu3"]
-[ext_resource type="Script" path="res://IDunno.gd" id="2_n7gmt"]
+[ext_resource type="Script" path="res://defender.gd" id="2_n7gmt"]
 
-[node name="IDunno" type="Sprite2D" groups=["IDunno"]]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fsofi"]
+size = Vector2(20, 248)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uh21f"]
+radius = 56.0
+
+[node name="Defender" type="Sprite2D" groups=["defender"]]
 position = Vector2(575, 338)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_w4iu3")
@@ -21,13 +27,20 @@ position = Vector2(0, -114)
 wait_time = 0.25
 one_shot = true
 
-[node name="MinuteHand" type="Sprite2D" parent="."]
+[node name="MinuteHand" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MinuteHand"]
+position = Vector2(0, -114)
+shape = SubResource("RectangleShape2D_fsofi")
+
+[node name="Sprite2D" type="Sprite2D" parent="MinuteHand"]
 scale = Vector2(0.1, 2)
 texture = ExtResource("1_w4iu3")
 offset = Vector2(0, -50)
 
 [node name="WhereThePewHappens" type="Node2D" parent="MinuteHand"]
-position = Vector2(0, -114)
+position = Vector2(0, -228)
+scale = Vector2(0.1, 2)
 
 [node name="FireRate" type="Timer" parent="MinuteHand"]
 wait_time = 0.1
@@ -41,5 +54,11 @@ scale = Vector2(0.03, 2)
 texture = ExtResource("1_w4iu3")
 offset = Vector2(0, -50)
 
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_uh21f")
+
 [connection signal="timeout" from="HourHand/FireRate" to="." method="_on_hour_fire_rate_timeout"]
 [connection signal="timeout" from="MinuteHand/FireRate" to="." method="_on_minute_fire_rate_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

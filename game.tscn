@@ -1,27 +1,85 @@
 [gd_scene load_steps=3 format=3 uid="uid://ml81ns4ra6gt"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_3x00i"]
-[ext_resource type="PackedScene" uid="uid://byp4pnenghnq" path="res://i_dunno.tscn" id="2_8pdvg"]
+[ext_resource type="PackedScene" uid="uid://byp4pnenghnq" path="res://defender.tscn" id="2_8pdvg"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_3x00i")
 
-[node name="CrappyUI" type="Node2D" parent="."]
+[node name="MenuUI" type="Node2D" parent="."]
+
+[node name="Label" type="RichTextLabel" parent="MenuUI"]
+offset_left = 258.0
+offset_top = 103.0
+offset_right = 1037.0
+offset_bottom = 248.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/bold_font_size = 70
+bbcode_enabled = true
+text = "[b]Weird Clock Thing[/b]"
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Label" type="RichTextLabel" parent="MenuUI/Label"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = -3.0
+offset_right = 795.0
+offset_bottom = 142.0
+theme_override_font_sizes/normal_font_size = 70
+bbcode_enabled = true
+text = "Weird Clock Thing"
+scroll_active = false
+autowrap_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuUI"]
+offset_left = 506.0
+offset_top = 295.0
+offset_right = 645.0
+offset_bottom = 353.0
+
+[node name="Button" type="Button" parent="MenuUI/VBoxContainer"]
+layout_mode = 2
+text = "Go!"
+
+[node name="PlayUI" type="Node2D" parent="."]
+visible = false
 position = Vector2(12, 7)
 
-[node name="HourCountLabel" type="Label" parent="CrappyUI"]
+[node name="HourCountLabel" type="Label" parent="PlayUI"]
 offset_right = 60.0
 offset_bottom = 26.0
 text = "Hour: 0
 "
 
-[node name="MinuteCountLabel" type="Label" parent="CrappyUI"]
+[node name="MinuteCountLabel" type="Label" parent="PlayUI"]
 offset_top = 25.0
 offset_right = 73.0
 offset_bottom = 51.0
 text = "Minute: 0"
 
+[node name="HealthLabel" type="Label" parent="PlayUI"]
+offset_top = 50.0
+offset_right = 73.0
+offset_bottom = 76.0
+text = "Health: 0"
+
+[node name="ConvertButton" type="Button" parent="PlayUI"]
+offset_left = 83.0
+offset_top = -5.0
+offset_right = 153.0
+offset_bottom = 26.0
+text = "Convert"
+
+[node name="BaddiesCountLabel" type="Label" parent="PlayUI"]
+offset_left = 985.0
+offset_top = 3.0
+offset_right = 1115.0
+offset_bottom = 26.0
+text = "Baddies Count: 0"
+
 [node name="SpawnPoints" type="Node2D" parent="."]
+visible = false
 
 [node name="Point1" type="Node2D" parent="SpawnPoints"]
 position = Vector2(916, -147)
@@ -59,16 +117,19 @@ position = Vector2(220, -145)
 [node name="Point12" type="Node2D" parent="SpawnPoints"]
 position = Vector2(577, -253)
 
-[node name="IDunno" parent="." instance=ExtResource("2_8pdvg")]
+[node name="Defender" parent="." instance=ExtResource("2_8pdvg")]
+visible = false
 
 [node name="Timers" type="Node" parent="."]
 
 [node name="SpawnRate" type="Timer" parent="Timers"]
-autostart = true
+wait_time = 1.5
 
 [node name="SpawnMove" type="Timer" parent="Timers"]
 wait_time = 5.0
-autostart = true
 
+[connection signal="pressed" from="MenuUI/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="PlayUI/ConvertButton" to="." method="_on_convert_button_pressed"]
+[connection signal="dead" from="Defender" to="." method="_on_defender_dead"]
 [connection signal="timeout" from="Timers/SpawnRate" to="." method="_on_spawn_rate_timeout"]
 [connection signal="timeout" from="Timers/SpawnMove" to="." method="_on_spawn_move_timeout"]
