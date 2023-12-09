@@ -70,9 +70,10 @@ func _process(_delta):
 
 func _on_spawn_rate_timeout():
 	if (Globals.current_baddies < max_baddies):
+		var varaince = 100
 		Globals.current_baddies += 1
 		var baddie = dont_like_this_dude.instantiate()
-		baddie.global_position = spawn_points[current_spawn_point].global_position
+		baddie.global_position = spawn_points[current_spawn_point].global_position + Vector2(rng.randf_range(-varaince , varaince), rng.randf_range(-varaince , varaince))
 		add_child(baddie)
 
 
