@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://ml81ns4ra6gt"]
+[gd_scene load_steps=5 format=3 uid="uid://ml81ns4ra6gt"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_3x00i"]
 [ext_resource type="PackedScene" uid="uid://byp4pnenghnq" path="res://defender.tscn" id="2_8pdvg"]
+[ext_resource type="AudioStream" uid="uid://b06f43m3386ao" path="res://music/background-loop-straight-04-2699.mp3" id="2_j5vwr"]
+[ext_resource type="AudioStream" uid="uid://xtuqwoeajnef" path="res://music/the-80s-retrowave-synthwave-143303.mp3" id="3_3ae7o"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_3x00i")
@@ -42,6 +44,11 @@ offset_bottom = 353.0
 layout_mode = 2
 text = "Go!"
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="MenuUI"]
+stream = ExtResource("2_j5vwr")
+volume_db = -20.0
+autoplay = true
+
 [node name="PlayUI" type="Node2D" parent="."]
 visible = false
 position = Vector2(12, 7)
@@ -77,6 +84,10 @@ offset_top = 3.0
 offset_right = 1115.0
 offset_bottom = 26.0
 text = "Baddies Count: 0"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="PlayUI"]
+stream = ExtResource("3_3ae7o")
+volume_db = -15.0
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 visible = false

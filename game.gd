@@ -39,7 +39,9 @@ func _process(_delta):
 		match game_state:
 			Constants.GameState.PLAY:
 				$MenuUI.visible = false
+				$MenuUI/AudioStreamPlayer.stop()
 				$PlayUI.visible = true
+				$PlayUI/AudioStreamPlayer.play()
 				defender.reset()
 				spawn_rate_timer.start()
 				spawn_move_timer.start()
@@ -47,7 +49,9 @@ func _process(_delta):
 			Constants.GameState.OVER:
 				$MenuUI.visible = true
 				$MenuUI/VBoxContainer/Button.text = "Try Again"
+				$MenuUI/AudioStreamPlayer.play()
 				$PlayUI.visible = false
+				$PlayUI/AudioStreamPlayer.stop()
 				defender.visible = false
 				spawn_rate_timer.stop()
 				spawn_move_timer.stop()
