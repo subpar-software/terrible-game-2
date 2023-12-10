@@ -87,7 +87,7 @@ func _physics_process(_delta):
 		minute_can_fire = false
 		minute_fire_timer.start()
 		var pew = pew_pew.instantiate()
-		pew.init(Constants.PewPewType.SMALL)
+		pew.init(Constants.PewPewType.SMALL, action_surge)
 		add_child(pew)
 		pew.global_position = $MinuteHand/WhereThePewHappens.global_position
 		pew.rotation = $MinuteHand.rotation
@@ -96,7 +96,7 @@ func _physics_process(_delta):
 		hour_can_fire = false
 		hour_fire_timer.start()
 		var bg_pew = pew_pew.instantiate()
-		bg_pew.init(Constants.PewPewType.LARGE)
+		bg_pew.init(Constants.PewPewType.LARGE, action_surge)
 		add_child(bg_pew)
 		bg_pew.global_position = $HourHand/WhereThePewHappens.global_position
 		bg_pew.rotation = $HourHand.rotation
