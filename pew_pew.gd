@@ -1,5 +1,7 @@
 extends Area2D
 
+signal baddie_killed
+
 var speed = 10
 var type: Constants.PewPewType
 var explode: bool = false
@@ -29,7 +31,7 @@ func _physics_process(_delta):
 
 func _on_body_entered(body):
 	if body.is_in_group("baddies"):
-		body.queue_free()
+		body.remove()
 	queue_free()
 
 

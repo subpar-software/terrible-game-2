@@ -23,9 +23,17 @@ func set_elapsed_time(elapsed: float):
 		speed_bonus = elapsed / 100
 
 
-func _on_tree_exiting():
+func remove():
+	$AudioStreamPlayer.play()
+	$CollisionShape2D.queue_free()
+	$Sprite2D.queue_free()
 	Globals.current_baddies -= 1
 
 
 func _on_destroy_timer_timeout():
+	Globals.current_baddies -= 1
+	queue_free()
+
+
+func _on_audio_stream_player_finished():
 	queue_free()

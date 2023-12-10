@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://1qx03pkk85yk"]
+[gd_scene load_steps=5 format=3 uid="uid://1qx03pkk85yk"]
 
 [ext_resource type="Script" path="res://baddie.gd" id="1_etdx7"]
 [ext_resource type="Texture2D" uid="uid://docjdv0ccf7sd" path="res://images/ring.png" id="2_3lhv8"]
+[ext_resource type="AudioStream" uid="uid://04212ibnbbxh" path="res://sounds/sfx_sounds_powerup4.wav" id="3_a1580"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rtacs"]
 radius = 39.0
@@ -22,5 +23,8 @@ shape = SubResource("CircleShape2D_rtacs")
 wait_time = 15.0
 autostart = true
 
-[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_a1580")
+
 [connection signal="timeout" from="DestroyTimer" to="." method="_on_destroy_timer_timeout"]
+[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_audio_stream_player_finished"]
