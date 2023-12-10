@@ -9,7 +9,7 @@ var speed = 200
 var speed_bonus = 1.0
 
 func _ready():
-	var size = rng.randf_range(0.2, 0.55)
+	var size = rng.randf_range(0.3, 0.6)
 	$Sprite2D.scale = Vector2(size, size)
 	$Sprite2D.modulate = Color.from_hsv((randi() % 12) / 12.0, 1, 1)
 	$CollisionShape2D.scale = Vector2(size, size)

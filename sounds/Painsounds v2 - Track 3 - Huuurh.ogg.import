@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dygsd3j2runoc"
+path="res://.godot/imported/Painsounds v2 - Track 3 - Huuurh.ogg-e962f33bc874289d89573360e8b18bb7.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/Painsounds v2 - Track 3 - Huuurh.ogg"
+dest_files=["res://.godot/imported/Painsounds v2 - Track 3 - Huuurh.ogg-e962f33bc874289d89573360e8b18bb7.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

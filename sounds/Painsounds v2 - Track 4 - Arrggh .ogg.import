@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://4n7egb6re26y"
+path="res://.godot/imported/Painsounds v2 - Track 4 - Arrggh .ogg-0753d19f8b107abed991e84ca6540100.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/Painsounds v2 - Track 4 - Arrggh .ogg"
+dest_files=["res://.godot/imported/Painsounds v2 - Track 4 - Arrggh .ogg-0753d19f8b107abed991e84ca6540100.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

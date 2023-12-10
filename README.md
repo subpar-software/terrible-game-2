@@ -25,4 +25,5 @@ Because.
 
 - Menu Music: https://pixabay.com/music/introoutro-background-loop-straight-04-2699/
 - Game Music: https://pixabay.com/music/synthwave-the-80s-retrowave-synthwave-143303/
-- The only sound: https://opengameart.org/content/sfx-plug-in-plug-out
+- Some sounds: https://opengameart.org/content/sfx-plug-in-plug-out
+- More sounds: https://opengameart.org/content/pain-sounds-by-emopreben

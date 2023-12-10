@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dfco0bt8gikbg"
+path="res://.godot/imported/Painsounds v2 - Track 2 - Hurgh.ogg-b53c3cb5c3a89e9e2009b16fa860ef50.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/Painsounds v2 - Track 2 - Hurgh.ogg"
+dest_files=["res://.godot/imported/Painsounds v2 - Track 2 - Hurgh.ogg-b53c3cb5c3a89e9e2009b16fa860ef50.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

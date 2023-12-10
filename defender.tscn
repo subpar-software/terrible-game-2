@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://byp4pnenghnq"]
+[gd_scene load_steps=12 format=3 uid="uid://byp4pnenghnq"]
 
 [ext_resource type="Shader" path="res://rainbow.gdshader" id="1_gutvf"]
 [ext_resource type="Texture2D" uid="uid://docjdv0ccf7sd" path="res://images/ring.png" id="2_3efd2"]
@@ -23,6 +23,27 @@ height = 130.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_uh21f"]
 radius = 38.0526
 
+[sub_resource type="Animation" id="Animation_jydj0"]
+resource_name = "hurt"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.75, 0.75), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_viias"]
+_data = {
+"hurt": SubResource("Animation_jydj0")
+}
+
 [node name="Defender" type="Sprite2D" groups=["defender"]]
 material = SubResource("ShaderMaterial_uvb8h")
 texture = ExtResource("2_3efd2")
@@ -44,6 +65,7 @@ one_shot = true
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MinuteHand"]
+visible = false
 position = Vector2(0, -69)
 shape = SubResource("CapsuleShape2D_tk8wn")
 
@@ -64,6 +86,7 @@ one_shot = true
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SecondHand"]
+visible = false
 position = Vector2(0, -78)
 shape = SubResource("CapsuleShape2D_yl00m")
 
@@ -77,12 +100,18 @@ offset = Vector2(0, -50)
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
 shape = SubResource("CircleShape2D_uh21f")
 
 [node name="ActionSurgeTimer" type="Timer" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 volume_db = -10.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_viias")
+}
 
 [connection signal="timeout" from="HourHand/FireRate" to="." method="_on_hour_fire_rate_timeout"]
 [connection signal="timeout" from="MinuteHand/FireRate" to="." method="_on_minute_fire_rate_timeout"]

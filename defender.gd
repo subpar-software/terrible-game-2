@@ -4,6 +4,8 @@ signal dead
 signal action_surge_begin
 signal action_surge_end
 
+var rng = RandomNumberGenerator.new()
+
 @onready var hour_hand = $HourHand
 @onready var minute_hand = $MinuteHand
 @onready var second_hand = $SecondHand
@@ -33,6 +35,14 @@ var pew_pew = preload("res://pew_pew.tscn")
 var action_surge = false
 var plugin = preload("res://sounds/Plug-in.wav")
 var plugout = preload("res://sounds/Plug-out.wav")
+
+var hurt_sounds = [
+	preload("res://sounds/Painsounds v2 - Track 1 - Arrrch.ogg"), 
+	preload("res://sounds/Painsounds v2 - Track 2 - Hurgh.ogg"), 
+	preload("res://sounds/Painsounds v2 - Track 3 - Huuurh.ogg"), 
+	preload("res://sounds/Painsounds v2 - Track 4 - Arrggh .ogg"), 
+	preload("res://sounds/Painsounds v2 - Track 5 - Urggh.ogg"), 
+	preload("res://sounds/Painsounds v2 - Track 6 - hyyrdhh.ogg")]
 
 
 
@@ -130,6 +140,9 @@ func _on_area_2d_body_entered(body):
 		body.queue_free()
 	curr_health -= 1
 	health_label.text = "Health: " + str(curr_health)
+	$AnimationPlayer.play("hurt")
+	$AudioStreamPlayer.stream = hurt_sounds[rng.randi_range(0, hurt_sounds.size() - 1)]
+	$AudioStreamPlayer.play()
 	if (curr_health <= 0):
 		emit_signal('dead')
 

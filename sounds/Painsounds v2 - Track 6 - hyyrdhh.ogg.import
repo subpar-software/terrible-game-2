@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://6uttsuj55kbc"
+path="res://.godot/imported/Painsounds v2 - Track 6 - hyyrdhh.ogg-ef65b86410332fff9c40432edf64a208.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/Painsounds v2 - Track 6 - hyyrdhh.ogg"
+dest_files=["res://.godot/imported/Painsounds v2 - Track 6 - hyyrdhh.ogg-ef65b86410332fff9c40432edf64a208.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
