@@ -30,6 +30,9 @@ var current_spawn_point = 0
 var all_baddies = []
 
 func _process(_delta):
+	if (game_state != Constants.GameState.PLAY and Input.is_action_pressed("ui_accept")):
+		game_state = Constants.GameState.PLAY
+
 	if (game_state != prev_game_state):
 		match game_state:
 			Constants.GameState.PLAY:
@@ -39,12 +42,13 @@ func _process(_delta):
 				$MenuUI/AudioStreamPlayer.stop()
 				$PlayUI.visible = true
 				$PlayUI/AudioStreamPlayer.play()
-				defender.reset()
 				spawn_rate_timer.start()
 				spawn_move_timer.start()
 				$ElapsedTime.start_timing()
+				defender.visible = true
 
 			Constants.GameState.OVER:
+				defender.reset()
 				$ElapsedTime.stop_timing()
 				$MenuUI.visible = true
 				$MenuUI/VBoxContainer/Button.text = " Try Again"
@@ -67,6 +71,8 @@ func _process(_delta):
 	$PlayUI/BaddiesCountLabel.text = "Baddies: " +  str(Globals.total_baddies)
 
 	# Increase spawn rate with time
+	if $ElapsedTime.elapsed > 0.0:
+		spawn_rate_timer.wait_time = 1.5
 	if $ElapsedTime.elapsed > 15.0:
 		spawn_rate_timer.wait_time = 1.0
 	if $ElapsedTime.elapsed > 30.0:
@@ -98,10 +104,6 @@ func _on_button_pressed():
 
 func _on_defender_dead():
 	game_state = Constants.GameState.OVER
-
-
-func _on_convert_button_pressed():
-	defender.convert_hours_to_health()
 
 
 func _on_defender_action_surge_begin():

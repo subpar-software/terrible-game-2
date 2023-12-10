@@ -103,10 +103,11 @@ func _physics_process(_delta):
 
 
 func reset():
-	visible = true
 	hour_hand.rotation_degrees = 0
 	minute_hand.rotation_degrees = 0
 	curr_health = max_health
+	hour_count = 0
+	minute_count = 0
 	health_label.text = "Health: " + str(curr_health)
 
 
