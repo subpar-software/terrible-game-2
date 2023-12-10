@@ -5,6 +5,9 @@ extends RigidBody2D
 
 var rng = RandomNumberGenerator.new()
 
+var speed = 200
+var speed_bonus = 1.0
+
 func _ready():
 	var size = rng.randf_range(0.2, 0.55)
 	$Sprite2D.scale = Vector2(size, size)
@@ -12,7 +15,12 @@ func _ready():
 	$CollisionShape2D.scale = Vector2(size, size)
 
 	look_at(attack_this.global_position)
-	apply_central_impulse(Vector2(cos(rotation), sin(rotation)) * 200)
+	apply_central_impulse(Vector2(cos(rotation), sin(rotation)) * speed * speed_bonus)
+
+
+func set_elapsed_time(elapsed: float):
+	if elapsed / 100 > speed_bonus:
+		speed_bonus = elapsed / 100
 
 
 func _on_tree_exiting():

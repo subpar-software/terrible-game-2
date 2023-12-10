@@ -108,7 +108,40 @@ theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = SubResource("StyleBoxTexture_yogd2")
 text = "Go!"
 
+[node name="TimeLastedTitleLabel" type="Label" parent="MenuUI"]
+visible = false
+offset_left = 480.0
+offset_top = 377.0
+offset_right = 578.0
+offset_bottom = 400.0
+text = "Time Lasted:"
+
+[node name="TimeLastedStatusLabel" type="Label" parent="MenuUI"]
+visible = false
+offset_left = 599.0
+offset_top = 377.0
+offset_right = 697.0
+offset_bottom = 400.0
+text = "0"
+
+[node name="BaddiesSpawnedTitleLabel" type="Label" parent="MenuUI"]
+visible = false
+offset_left = 438.0
+offset_top = 413.0
+offset_right = 583.0
+offset_bottom = 436.0
+text = "Baddies Spawned: "
+
+[node name="BaddiesSpawnedLabel" type="Label" parent="MenuUI"]
+visible = false
+offset_left = 598.0
+offset_top = 411.0
+offset_right = 696.0
+offset_bottom = 434.0
+text = "0"
+
 [node name="PlayUI" type="Node2D" parent="."]
+visible = false
 position = Vector2(12, 7)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="PlayUI"]

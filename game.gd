@@ -25,17 +25,16 @@ var prev_game_state: Constants.GameState = Constants.GameState.START
 var rng = RandomNumberGenerator.new()
 
 var dont_like_this_dude = preload("res://baddie.tscn")
-var max_baddies = 15
+var max_baddies = 100
 var current_spawn_point = 0
 var all_baddies = []
-
-func _ready():
-	Globals.current_baddies = 0
 
 func _process(_delta):
 	if (game_state != prev_game_state):
 		match game_state:
 			Constants.GameState.PLAY:
+				Globals.current_baddies = 0
+				Globals.total_baddies = 0
 				$MenuUI.visible = false
 				$MenuUI/AudioStreamPlayer.stop()
 				$PlayUI.visible = true
@@ -48,7 +47,13 @@ func _process(_delta):
 			Constants.GameState.OVER:
 				$ElapsedTime.stop_timing()
 				$MenuUI.visible = true
-				$MenuUI/VBoxContainer/Button.text = $ElapsedTime.str_elapsed + " Try Again"
+				$MenuUI/VBoxContainer/Button.text = " Try Again"
+				$MenuUI/TimeLastedTitleLabel.visible = true
+				$MenuUI/TimeLastedStatusLabel.visible = true
+				$MenuUI/BaddiesSpawnedTitleLabel.visible = true
+				$MenuUI/BaddiesSpawnedLabel.visible = true
+				$MenuUI/TimeLastedStatusLabel.text = $ElapsedTime.str_elapsed
+				$MenuUI/BaddiesSpawnedLabel.text = str(Globals.total_baddies)
 				$MenuUI/AudioStreamPlayer.play()
 				$PlayUI.visible = false
 				$PlayUI/AudioStreamPlayer.stop()
@@ -57,16 +62,28 @@ func _process(_delta):
 				spawn_move_timer.stop()
 				for baddie in get_tree().get_nodes_in_group("baddies"):
 					baddie.queue_free()
-	
+
 	prev_game_state = game_state
-	$PlayUI/BaddiesCountLabel.text = "Baddies Count: " +  str(Globals.current_baddies)
+	$PlayUI/BaddiesCountLabel.text = "Baddies: " +  str(Globals.total_baddies)
+
+	# Increase spawn rate with time
+	if $ElapsedTime.elapsed > 15.0:
+		spawn_rate_timer.wait_time = 1.0
+	if $ElapsedTime.elapsed > 30.0:
+		spawn_rate_timer.wait_time = 0.75
+	if $ElapsedTime.elapsed > 45.0:
+		spawn_rate_timer.wait_time = 0.5
+	if $ElapsedTime.elapsed > 60.0:
+		spawn_rate_timer.wait_time = 0.25
 
 
 func _on_spawn_rate_timeout():
 	if (Globals.current_baddies < max_baddies):
 		var varaince = 100
 		Globals.current_baddies += 1
+		Globals.total_baddies += 1
 		var baddie = dont_like_this_dude.instantiate()
+		baddie.set_elapsed_time($ElapsedTime.elapsed)
 		baddie.global_position = spawn_points[current_spawn_point].global_position + Vector2(rng.randf_range(-varaince , varaince), rng.randf_range(-varaince , varaince))
 		add_child(baddie)
 
