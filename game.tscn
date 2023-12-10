@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ml81ns4ra6gt"]
+[gd_scene load_steps=20 format=3 uid="uid://ml81ns4ra6gt"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_3x00i"]
 [ext_resource type="Texture2D" uid="uid://dg8ay68aeyr2e" path="res://images/icon.svg" id="2_5ysxq"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://menu-ui.gd" id="3_y8sev"]
 [ext_resource type="Script" path="res://elapsed_time.gd" id="5_pfu6u"]
 [ext_resource type="Shader" path="res://rainbow.gdshader" id="5_pqr8e"]
+[ext_resource type="Texture2D" uid="uid://b4iwarohuci7o" path="res://images/inkpx-curved-text.png" id="8_k548n"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_e4eyg"]
 
@@ -34,6 +35,98 @@ shader = ExtResource("5_pqr8e")
 shader_parameter/strength = 0.5
 shader_parameter/speed = 0.5
 shader_parameter/angle = 15.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wxy1t"]
+shader = ExtResource("5_pqr8e")
+shader_parameter/strength = 0.5
+shader_parameter/speed = 0.5
+shader_parameter/angle = 17.835
+
+[sub_resource type="Animation" id="Animation_8ak83"]
+resource_name = "help_fade"
+length = 3.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Inkpx-curved-text:material:shader_parameter/angle")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 360.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Inkpx-curved-text:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.785398, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Inkpx-curved-text:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2.55, 2.6, 2.8, 2.85, 2.9, 2.95, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_27tle"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Inkpx-curved-text:material:shader_parameter/angle")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [17.835]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Inkpx-curved-text:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Inkpx-curved-text:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cf7yl"]
+_data = {
+"RESET": SubResource("Animation_27tle"),
+"help_fade": SubResource("Animation_8ak83")
+}
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_3x00i")
@@ -188,6 +281,17 @@ offset_top = 2.0
 offset_right = 674.0
 offset_bottom = 38.0
 text = "Press Space for Action Surge"
+
+[node name="Inkpx-curved-text" type="Sprite2D" parent="PlayUI"]
+modulate = Color(1, 1, 1, 0.8)
+material = SubResource("ShaderMaterial_wxy1t")
+position = Vector2(576, 324)
+texture = ExtResource("8_k548n")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayUI"]
+libraries = {
+"": SubResource("AnimationLibrary_cf7yl")
+}
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 visible = false

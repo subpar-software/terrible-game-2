@@ -3,6 +3,8 @@ extends Node2D
 var game_state: Constants.GameState = Constants.GameState.START
 var prev_game_state: Constants.GameState = Constants.GameState.START
 
+var first_play = true
+
 @onready var defender = $Defender
 
 @onready var spawn_points = [
@@ -46,6 +48,9 @@ func _process(_delta):
 				spawn_move_timer.start()
 				$ElapsedTime.start_timing()
 				defender.visible = true
+				if first_play:
+					first_play = false
+					$PlayUI/AnimationPlayer.play("help_fade")
 
 			Constants.GameState.OVER:
 				defender.reset()
