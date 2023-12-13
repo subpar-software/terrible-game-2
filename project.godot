@@ -10,7 +10,8 @@ config_version=5
 
 [application]
 
-config/name="godot-game-2"
+config/name="Weird Clock Thing"
+config/description="I got nothing"
 run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://images/icon.svg"
@@ -26,6 +27,7 @@ gdscript/warnings/integer_division=0
 [display]
 
 window/size/resizable=false
+window/stretch/mode="canvas_items"
 
 [input]
 

@@ -4,6 +4,7 @@ var game_state: Constants.GameState = Constants.GameState.START
 var prev_game_state: Constants.GameState = Constants.GameState.START
 
 var first_play = true
+var action_surge = false
 
 @onready var defender = $Defender
 
@@ -34,7 +35,7 @@ var all_baddies = []
 func _process(_delta):
 	if (game_state != Constants.GameState.PLAY and Input.is_action_pressed("ui_accept")):
 		game_state = Constants.GameState.PLAY
-
+	
 	if (game_state != prev_game_state):
 		match game_state:
 			Constants.GameState.PLAY:
@@ -87,6 +88,8 @@ func _process(_delta):
 	if $ElapsedTime.elapsed > 60.0:
 		spawn_rate_timer.wait_time = 0.25
 
+	$ParallaxBackground.action_surge = action_surge
+
 
 func _on_spawn_rate_timeout():
 	if (Globals.current_baddies < max_baddies):
@@ -112,8 +115,10 @@ func _on_defender_dead():
 
 
 func _on_defender_action_surge_begin():
+	action_surge = true
 	$Camera2D.shake = true
 
 
 func _on_defender_action_surge_end():
+	action_surge = false
 	$Camera2D.shake = false
