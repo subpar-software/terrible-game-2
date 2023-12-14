@@ -1,11 +1,11 @@
 name: Deploy Game
 
 on:
-    push:
-      branches:
-        - main
-      tags:
-        - '*'
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
 
 env:
   BUTLER_API_KEY: ${{secrets.ITCHIO_API_KEY}}
