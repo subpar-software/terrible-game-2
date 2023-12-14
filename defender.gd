@@ -1,4 +1,4 @@
-extends Sprite2D
+extends Node2D
 
 signal dead
 signal action_surge_begin
@@ -59,12 +59,12 @@ func _physics_process(_delta):
 		hour_hand.rotate(current_speed / hand_rotate_ratio)
 		minute_hand.rotate(current_speed)
 		second_hand.rotate(current_speed * 6)
-		
+
 	if Input.is_action_pressed("ui_left"):
 		hour_hand.rotate(-current_speed / hand_rotate_ratio)
 		minute_hand.rotate(-current_speed)
 		second_hand.rotate(-current_speed * 6)
-	
+
 	if hour_hand.rotation_degrees > 360.0:
 		hour_hand.rotation_degrees -= 360.0
 		hour_count += 1
@@ -82,7 +82,7 @@ func _physics_process(_delta):
 		$"../PlayUI/ActionSurgeLabel".visible = false
 		action_surge = true
 		convert_hours_to_health()
-		hour_fire_timer.wait_time = 0.05
+		hour_fire_timer.wait_time = 0.15
 		hand_rotate_ratio = 3.0
 		$ActionSurgeTimer.wait_time = minute_count / 2
 		$ActionSurgeTimer.start()

@@ -2,8 +2,11 @@ extends Area2D
 
 signal baddie_killed
 
-var speed = 10
+const SPEED_STANDARD = 6
+const SPEED_EXPLODE = 15
+var speed = SPEED_STANDARD
 var type: Constants.PewPewType
+
 var explode: bool = false
 
 var pew_pew = preload("res://pew_pew.tscn")
@@ -18,15 +21,16 @@ func _ready():
 		scale = Vector2(0.08, 0.08)
 		if type == Constants.PewPewType.LARGE:
 			scale = Vector2(0.05, 0.08)
-			
+	else:
+		speed = SPEED_EXPLODE
+
 	$DestroyTimer.start()
 	if (explode):
 		$ExplodeTimer.start()
 
 
 func _physics_process(_delta):
-	var this_speed = speed if explode else speed * 4
-	position += Vector2.UP.rotated(rotation) * this_speed
+	position += Vector2.UP.rotated(rotation) * speed
 
 
 func _on_body_entered(body):

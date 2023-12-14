@@ -18,7 +18,7 @@ shader_parameter/span = 0.5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f7cpb"]
 
-[node name="SmallPewPew" type="Area2D" groups=["pewpew"]]
+[node name="PewPew" type="Area2D" groups=["pewpew"]]
 material = SubResource("ShaderMaterial_icqgq")
 collision_layer = 4
 collision_mask = 2
@@ -35,7 +35,7 @@ shape = SubResource("RectangleShape2D_f7cpb")
 wait_time = 2.0
 
 [node name="ExplodeTimer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.1
 one_shot = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
