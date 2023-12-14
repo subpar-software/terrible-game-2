@@ -68,10 +68,16 @@ func _physics_process(_delta):
 	if hour_hand.rotation_degrees > 360.0:
 		hour_hand.rotation_degrees -= 360.0
 		hour_count += 1
+	
+	if hour_hand.rotation_degrees < -360.0:
+		hour_hand.rotation_degrees += 360.0
 
 	if minute_hand.rotation_degrees > 360.0:
 		minute_hand.rotation_degrees -= 360.0
 		minute_count += 1
+	
+	if minute_hand.rotation_degrees < -360.0:
+		minute_hand.rotation_degrees += 360.0
 
 	hour_count_label.text = "Hour: " + str(hour_count)
 	minute_count_label.text = "Minute: " + str(minute_count)
