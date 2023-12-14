@@ -33,9 +33,6 @@ var current_spawn_point = 0
 var all_baddies = []
 
 func _process(_delta):
-	if (game_state != Constants.GameState.PLAY and Input.is_action_pressed("ui_accept")):
-		game_state = Constants.GameState.PLAY
-	
 	if (game_state != prev_game_state):
 		match game_state:
 			Constants.GameState.PLAY:
@@ -89,6 +86,9 @@ func _process(_delta):
 		spawn_rate_timer.wait_time = 0.25
 
 	$ParallaxBackground.action_surge = action_surge
+	
+	if (game_state != Constants.GameState.PLAY and Input.is_action_just_pressed("ui_accept")):
+		game_state = Constants.GameState.PLAY
 
 
 func _on_spawn_rate_timeout():
