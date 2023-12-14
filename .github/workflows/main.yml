@@ -1,0 +1,69 @@
+name: Deploy Game
+
+on:
+    push:
+      branches:
+        - main
+      tags:
+        - '*'
+
+env:
+  BUTLER_API_KEY: ${{secrets.ITCHIO_API_KEY}}
+  ITCH_PROJECT_NAME: "weird-clock-thing"
+  ITCH_USERNAME: "deplicator"
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+      - name: Get Godot Version
+        run: echo "GODOT_VERSION=$(grep '^config/features' project.godot | cut -d "\"" -f 2)" >> $GITHUB_ENV
+      - name: Download Godot
+        run: |
+          curl -L -o godot.zip https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/Godot_v$GODOT_VERSION-stable_linux.x86_64.zip
+          unzip godot.zip
+          mv Godot_v$GODOT_VERSION-stable_linux.x86_64 godot
+          chmod +x godot
+      - name: Download Godot Export Templates
+        run: |
+          curl -L -o export_templates.zip https://downloads.tuxfamily.org/godotengine/$GODOT_VERSION/Godot_v$GODOT_VERSION-stable_export_templates.tpz
+          unzip export_templates.zip
+      - name: Install Export Templates
+        run: |
+          mkdir -p ~/.local/share/godot/export_templates/$GODOT_VERSION.stable
+          mv ./templates/* ~/.local/share/godot/export_templates/$GODOT_VERSION.stable
+          mkdir export
+      - name: Build Web
+        run: ./godot --headless --export-release Web
+      - name: Zip Export
+        run: |
+          cd export
+          zip index.zip -r -m *
+          cd -
+      - name: Save Export for Next Job
+        uses: actions/upload-artifact@v4
+        with:
+          name: export
+          path: export
+
+  Publish:
+    needs: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Export
+        uses: actions/download-artifact@v4
+        with:
+          name: export
+          path: export
+      - name: Download Butler
+        run: |
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip
+          chmod +x butler
+          ./butler -V
+      - name: Login To Butler
+        run: ./butler login
+      - name: Push  To Itch
+        run: ./butler push ./export/index.zip $ITCH_USERNAME/$ITCH_PROJECT_NAME:html
