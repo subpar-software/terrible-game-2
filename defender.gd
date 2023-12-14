@@ -55,12 +55,12 @@ func _physics_process(_delta):
 	if (minute_count >= 10):
 		$"../PlayUI/ActionSurgeLabel".visible = true
 
-	if Input.is_action_pressed("ui_right"):
+	if visible and Input.is_action_pressed("ui_right"):
 		hour_hand.rotate(current_speed / hand_rotate_ratio)
 		minute_hand.rotate(current_speed)
 		second_hand.rotate(current_speed * 6)
 
-	if Input.is_action_pressed("ui_left"):
+	if visible and Input.is_action_pressed("ui_left"):
 		hour_hand.rotate(-current_speed / hand_rotate_ratio)
 		minute_hand.rotate(-current_speed)
 		second_hand.rotate(-current_speed * 6)
