@@ -77,7 +77,10 @@ jobs:
         with:
           name: export
           path: export
+      - name: Rename Zip File
+        run: |
+          mv ./export/index.zip ./export/$ITCH_PROJECT_NAME-$GITHUB_REF_NAME.zip
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: ./export/index.zip
+          files: ./export/$ITCH_PROJECT_NAME-$GITHUB_REF_NAME.zip
