@@ -1,0 +1,13 @@
+name: Deploy Game
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  Release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
