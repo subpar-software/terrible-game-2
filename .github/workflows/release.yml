@@ -1,4 +1,4 @@
-name: Deploy Game
+name: Create Release
 
 on:
   push:
