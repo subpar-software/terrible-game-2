@@ -1,21 +1,10 @@
 # Weird Clock Thing
 
-[Play on itch.io](https://deplicator.itch.io/weird-clock-thing).
-
-If you last less than 20 seconds I hope it was your first time. If you can last
-3 minutes you're a master gamer.
-
 ## Controls
 
-- Clockwise: right arrow, D, gamepad right
-- Counter Clockwise: left arrow, A, gamepad left
-- Action Surge: space bar, any standard button on controller
-
-## Clues
-
-- Go clockwise
-- Minute hand can smack baddies
-- Action Surge is your friend
+- right arrow, D, gamepad right - Turn Clock
+- left arrow, A, gamepad left - Turn Clock
+- spacebar, any standard button on controller - Stuff Happens
 
 ## Why
 
@@ -29,3 +18,4 @@ Because.
 - Defender hurt sounds: https://opengameart.org/content/pain-sounds-by-emopreben
 - Baddie death sounds: https://opengameart.org/content/512-sound-effects-8-bit-style​
 ​
+<iframe frameborder="0" src="https://itch.io/embed/2413961" width="552" height="167"><a href="https://deplicator.itch.io/weird-clock-thing">Weird Clock Thing by deplicator</a></iframe>
