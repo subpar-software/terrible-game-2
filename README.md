@@ -1,5 +1,7 @@
 # Weird Clock Thing
 
+[Play on Itch.io](https://deplicator.itch.io/weird-clock-thing)
+
 ## Controls
 
 - right arrow, D, gamepad right - Turn Clock
@@ -18,4 +20,3 @@ Because.
 - Defender hurt sounds: https://opengameart.org/content/pain-sounds-by-emopreben
 - Baddie death sounds: https://opengameart.org/content/512-sound-effects-8-bit-style​
 ​
-<iframe frameborder="0" src="https://itch.io/embed/2413961" width="552" height="167"><a href="https://deplicator.itch.io/weird-clock-thing">Weird Clock Thing by deplicator</a></iframe>
