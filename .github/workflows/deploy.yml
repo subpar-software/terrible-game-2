@@ -63,7 +63,7 @@ jobs:
           ./butler -V
       - name: Login To Butler
         run: ./butler login
-      - name: Push  To Itch
+      - name: Push To Itch.io
         run: ./butler push ./export/index.zip $ITCH_USERNAME/$ITCH_PROJECT_NAME:html
 
   Release:
