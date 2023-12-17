@@ -1,8 +1,8 @@
 [gd_scene load_steps=12 format=3 uid="uid://byp4pnenghnq"]
 
-[ext_resource type="Shader" path="res://rainbow.gdshader" id="1_gutvf"]
+[ext_resource type="Shader" path="res://shaders/rainbow.gdshader" id="1_gutvf"]
 [ext_resource type="Texture2D" uid="uid://docjdv0ccf7sd" path="res://images/ring.png" id="2_3efd2"]
-[ext_resource type="Script" path="res://defender.gd" id="2_n7gmt"]
+[ext_resource type="Script" path="res://scenes/defender/defender.gd" id="2_n7gmt"]
 [ext_resource type="Texture2D" uid="uid://fr6jry1umbmx" path="res://images/clock_hand.png" id="4_3rv7s"]
 [ext_resource type="Texture2D" uid="uid://dg8ay68aeyr2e" path="res://images/icon.svg" id="5_63rt6"]
 

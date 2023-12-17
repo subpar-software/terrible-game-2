@@ -1,41 +1,20 @@
+class_name Defender
 extends Node2D
 
 signal dead
-signal action_surge_begin
-signal action_surge_end
+signal surge_begin
+signal surge_end
+
+@export var start_health = 2
+@export var hand_rotate_ratio = 6.0
+@export var minute_hand_rotation_speed = 0.10
 
 var rng = RandomNumberGenerator.new()
 
-@onready var hour_hand = $HourHand
-@onready var minute_hand = $MinuteHand
-@onready var second_hand = $SecondHand
+var pew_pew = preload("res://scenes/pewpew/pew_pew.tscn")
 
-@onready var hour_fire_timer = $HourHand/FireRate
-@onready var minute_fire_timer = $MinuteHand/FireRate
-
-@onready var hour_count_label = $"../PlayUI/HourCountLabel"
-@onready var minute_count_label = $"../PlayUI/MinuteCountLabel"
-@onready var health_label = $"../PlayUI/HealthLabel"
-
-var max_health = 2
-var curr_health = max_health
-
-var hand_rotate_ratio = 6.0
-
-var hour_can_fire = true
-var minute_can_fire = true
-
-var hour_count = 0
-var minute_count = 0
-
-var current_speed = 0.10
-
-var pew_pew = preload("res://pew_pew.tscn")
-
-var action_surge = false
 var plugin = preload("res://sounds/Plug-in.wav")
 var plugout = preload("res://sounds/Plug-out.wav")
-
 var hurt_sounds = [
 	preload("res://sounds/Painsounds v2 - Track 1 - Arrrch.ogg"), 
 	preload("res://sounds/Painsounds v2 - Track 2 - Hurgh.ogg"), 
@@ -44,6 +23,22 @@ var hurt_sounds = [
 	preload("res://sounds/Painsounds v2 - Track 5 - Urggh.ogg"), 
 	preload("res://sounds/Painsounds v2 - Track 6 - hyyrdhh.ogg")]
 
+@onready var hour_hand = $HourHand
+@onready var minute_hand = $MinuteHand
+@onready var second_hand = $SecondHand
+@onready var hour_fire_timer = $HourHand/FireRate
+@onready var minute_fire_timer = $MinuteHand/FireRate
+
+var curr_health = start_health
+var is_surging = false
+var hour_count = 0
+var hour_can_fire = true
+var minute_count = 0
+var minute_can_fire = true
+
+func _init():
+	position = DisplayServer.window_get_size() / 2
+	curr_health = start_health
 
 
 func _ready():
@@ -52,18 +47,16 @@ func _ready():
 
 
 func _physics_process(_delta):
-	if (minute_count >= 10):
-		$"../PlayUI/ActionSurgeLabel".visible = true
 
 	if visible and Input.is_action_pressed("ui_right"):
-		hour_hand.rotate(current_speed / hand_rotate_ratio)
-		minute_hand.rotate(current_speed)
-		second_hand.rotate(current_speed * 6)
+		hour_hand.rotate(minute_hand_rotation_speed / hand_rotate_ratio)
+		minute_hand.rotate(minute_hand_rotation_speed)
+		second_hand.rotate(minute_hand_rotation_speed * 6)
 
 	if visible and Input.is_action_pressed("ui_left"):
-		hour_hand.rotate(-current_speed / hand_rotate_ratio)
-		minute_hand.rotate(-current_speed)
-		second_hand.rotate(-current_speed * 6)
+		hour_hand.rotate(-minute_hand_rotation_speed / hand_rotate_ratio)
+		minute_hand.rotate(-minute_hand_rotation_speed)
+		second_hand.rotate(-minute_hand_rotation_speed * 6)
 
 	if hour_hand.rotation_degrees > 360.0:
 		hour_hand.rotation_degrees -= 360.0
@@ -79,14 +72,11 @@ func _physics_process(_delta):
 	if minute_hand.rotation_degrees < -360.0:
 		minute_hand.rotation_degrees += 360.0
 
-	hour_count_label.text = "Hour: " + str(hour_count)
-	minute_count_label.text = "Minute: " + str(minute_count)
 	
 	if Input.is_action_pressed("ui_accept") and minute_count >= 2:
 		$AudioStreamPlayer.stream = plugin
 		$AudioStreamPlayer.play()
-		$"../PlayUI/ActionSurgeLabel".visible = false
-		action_surge = true
+		is_surging = true
 		convert_hours_to_health()
 		hour_fire_timer.wait_time = 0.15
 		hand_rotate_ratio = 3.0
@@ -96,14 +86,14 @@ func _physics_process(_delta):
 		$SecondHand.visible = true
 		$SecondHand/CollisionShape2D.disabled = false
 		$"../PlayUI/AudioStreamPlayer".pitch_scale = 1.5
-		emit_signal("action_surge_begin")
+		emit_signal("surge_begin")
 
 
-	if (action_surge and minute_can_fire):
+	if (is_surging and minute_can_fire):
 		minute_can_fire = false
 		minute_fire_timer.start()
 		var pew = pew_pew.instantiate()
-		pew.init(Constants.PewPewType.SMALL, action_surge)
+		pew.init(Constants.PewPewType.SMALL, is_surging)
 		add_child(pew)
 		pew.global_position = $MinuteHand/WhereThePewHappens.global_position
 		pew.rotation = $MinuteHand.rotation
@@ -112,25 +102,15 @@ func _physics_process(_delta):
 		hour_can_fire = false
 		hour_fire_timer.start()
 		var bg_pew = pew_pew.instantiate()
-		bg_pew.init(Constants.PewPewType.LARGE, action_surge)
+		bg_pew.init(Constants.PewPewType.LARGE, is_surging)
 		add_child(bg_pew)
 		bg_pew.global_position = $HourHand/WhereThePewHappens.global_position
 		bg_pew.rotation = $HourHand.rotation
 
 
-func reset():
-	hour_hand.rotation_degrees = 0
-	minute_hand.rotation_degrees = 0
-	curr_health = max_health
-	hour_count = 0
-	minute_count = 0
-	health_label.text = "Health: " + str(curr_health)
-
-
 func convert_hours_to_health():
 	curr_health += hour_count
 	hour_count = 0
-	health_label.text = "Health: " + str(curr_health)
 
 
 func _on_hour_fire_rate_timeout():
@@ -142,10 +122,9 @@ func _on_minute_fire_rate_timeout():
 
 
 func _on_area_2d_body_entered(body):
-	if body.is_in_group("baddies"):
+	if body.is_in_group("rings"):
 		body.queue_free()
 	curr_health -= 1
-	health_label.text = "Health: " + str(curr_health)
 	$AnimationPlayer.play("hurt")
 	$AudioStreamPlayer.stream = hurt_sounds[rng.randi_range(0, hurt_sounds.size() - 1)]
 	$AudioStreamPlayer.play()
@@ -154,7 +133,7 @@ func _on_area_2d_body_entered(body):
 
 
 func _on_action_surge_timer_timeout():
-	action_surge = false
+	is_surging = false
 	$AudioStreamPlayer.stream = plugout
 	$AudioStreamPlayer.play()
 	hour_fire_timer.wait_time = 0.25
@@ -163,4 +142,4 @@ func _on_action_surge_timer_timeout():
 	$SecondHand/CollisionShape2D.disabled = true
 	$"../PlayUI/AudioStreamPlayer".pitch_scale = 1.0
 	$ActionSurgeTimer.stop()
-	emit_signal("action_surge_end")
+	emit_signal("surge_end")

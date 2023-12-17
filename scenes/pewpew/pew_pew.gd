@@ -1,6 +1,6 @@
 extends Area2D
 
-signal baddie_killed
+signal ring_killed
 
 const SPEED_STANDARD = 6
 const SPEED_EXPLODE = 15
@@ -9,7 +9,7 @@ var type: Constants.PewPewType
 
 var explode: bool = false
 
-var pew_pew = preload("res://pew_pew.tscn")
+var pew_pew = preload("res://scenes/pewpew/pew_pew.tscn")
 
 func init(pew_pew_type: Constants.PewPewType, action_surge: bool):
 	type = pew_pew_type
@@ -34,7 +34,7 @@ func _physics_process(_delta):
 
 
 func _on_body_entered(body):
-	if body.is_in_group("baddies"):
+	if body.is_in_group("rings"):
 		body.remove()
 	queue_free()
 

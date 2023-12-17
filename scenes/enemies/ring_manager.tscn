@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3 uid="uid://7nhe6lar3obw"]
+
+[ext_resource type="Script" path="res://scenes/enemies/ring_manager.gd" id="1_yr07u"]
+
+[node name="RingManager" type="Node"]
+script = ExtResource("1_yr07u")
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="Point1" type="Node2D" parent="SpawnPoints"]
+position = Vector2(916, -147)
+
+[node name="Point2" type="Node2D" parent="SpawnPoints"]
+position = Vector2(1259, 131)
+
+[node name="Point3" type="Node2D" parent="SpawnPoints"]
+position = Vector2(1325, 344)
+
+[node name="Point4" type="Node2D" parent="SpawnPoints"]
+position = Vector2(1264, 605)
+
+[node name="Point5" type="Node2D" parent="SpawnPoints"]
+position = Vector2(1019, 834)
+
+[node name="Point6" type="Node2D" parent="SpawnPoints"]
+position = Vector2(595, 879)
+
+[node name="Point7" type="Node2D" parent="SpawnPoints"]
+position = Vector2(256, 744)
+
+[node name="Point8" type="Node2D" parent="SpawnPoints"]
+position = Vector2(-55, 565)
+
+[node name="Point9" type="Node2D" parent="SpawnPoints"]
+position = Vector2(-149, 320)
+
+[node name="Point10" type="Node2D" parent="SpawnPoints"]
+position = Vector2(-45, 86)
+
+[node name="Point11" type="Node2D" parent="SpawnPoints"]
+position = Vector2(220, -145)
+
+[node name="Point12" type="Node2D" parent="SpawnPoints"]
+position = Vector2(577, -253)
+
+[node name="SpawnRate" type="Timer" parent="."]
+wait_time = 1.5
+
+[node name="SpawnPointMove" type="Timer" parent="."]
+wait_time = 5.0
+
+[connection signal="timeout" from="SpawnRate" to="." method="_on_spawn_rate_timeout"]
+[connection signal="timeout" from="SpawnPointMove" to="." method="_on_spawn_point_move_timeout"]

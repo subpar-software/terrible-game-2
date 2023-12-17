@@ -12,10 +12,6 @@ func _process(_delta):
 	if (timing):
 		time_now = Time.get_unix_time_from_system()
 		elapsed = time_now - time_start
-		var seconds = fmod(elapsed, 60)
-		var minutes = fmod(elapsed, 3600) / 60
-		str_elapsed = "%02d : %02d" % [minutes, seconds]
-		$"../PlayUI/TimerLabel".text = "elapsed : " + str_elapsed
 
 
 func start_timing():

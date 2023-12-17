@@ -27,11 +27,10 @@ func remove():
 	$AudioStreamPlayer.play()
 	$CollisionShape2D.queue_free()
 	$Sprite2D.queue_free()
-	Globals.current_baddies -= 1
+	Globals.current_rings -= 1
 
 
 func _on_destroy_timer_timeout():
-	Globals.current_baddies -= 1
 	queue_free()
 
 

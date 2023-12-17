@@ -1,20 +1,20 @@
 [gd_scene load_steps=5 format=3 uid="uid://1qx03pkk85yk"]
 
-[ext_resource type="Script" path="res://baddie.gd" id="1_etdx7"]
-[ext_resource type="Texture2D" uid="uid://docjdv0ccf7sd" path="res://images/ring.png" id="2_3lhv8"]
-[ext_resource type="AudioStream" uid="uid://04212ibnbbxh" path="res://sounds/sfx_sounds_powerup4.wav" id="3_a1580"]
+[ext_resource type="Script" path="res://scenes/enemies/ring.gd" id="1_414g8"]
+[ext_resource type="Texture2D" uid="uid://docjdv0ccf7sd" path="res://images/ring.png" id="2_mumoe"]
+[ext_resource type="AudioStream" uid="uid://04212ibnbbxh" path="res://sounds/sfx_sounds_powerup4.wav" id="3_d8p8x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rtacs"]
 radius = 39.0
 
-[node name="Baddie" type="RigidBody2D" groups=["baddies"]]
+[node name="RingEnemy" type="RigidBody2D" groups=["rings"]]
 z_index = 2
 collision_layer = 2
 collision_mask = 7
-script = ExtResource("1_etdx7")
+script = ExtResource("1_414g8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_3lhv8")
+texture = ExtResource("2_mumoe")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_rtacs")
@@ -24,7 +24,7 @@ wait_time = 15.0
 autostart = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_a1580")
+stream = ExtResource("3_d8p8x")
 volume_db = -10.0
 
 [connection signal="timeout" from="DestroyTimer" to="." method="_on_destroy_timer_timeout"]

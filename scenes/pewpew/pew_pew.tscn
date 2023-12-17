@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://c2tvlusd36b78"]
 
-[ext_resource type="Shader" path="res://pewpew.gdshader" id="1_n7s3m"]
-[ext_resource type="Script" path="res://pew_pew.gd" id="2_a5fk2"]
+[ext_resource type="Shader" path="res://shaders/pewpew.gdshader" id="1_n7s3m"]
+[ext_resource type="Script" path="res://scenes/pewpew/pew_pew.gd" id="2_a5fk2"]
 [ext_resource type="Texture2D" uid="uid://dg8ay68aeyr2e" path="res://images/icon.svg" id="3_o88qc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_icqgq"]

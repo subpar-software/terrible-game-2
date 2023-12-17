@@ -2,11 +2,13 @@ extends Camera2D
 
 var rand = RandomNumberGenerator.new()
 
+@onready var game = $".."
+
 var shake_strength: float = 2.0
-var shake = false
+
 
 func _process(delta):
-	if shake:
+	if game.is_surging:
 		zoom = Vector2(lerpf(zoom.x, 0.95,delta * 2), lerpf(zoom.y, 0.95, delta * 2))
 		offset += Vector2(
 			rand.randf_range(-shake_strength, shake_strength), 
