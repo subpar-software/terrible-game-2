@@ -16,11 +16,11 @@ var pew_pew = preload("res://scenes/pewpew/pew_pew.tscn")
 var plugin = preload("res://sounds/Plug-in.wav")
 var plugout = preload("res://sounds/Plug-out.wav")
 var hurt_sounds = [
-	preload("res://sounds/Painsounds v2 - Track 1 - Arrrch.ogg"), 
-	preload("res://sounds/Painsounds v2 - Track 2 - Hurgh.ogg"), 
-	preload("res://sounds/Painsounds v2 - Track 3 - Huuurh.ogg"), 
-	preload("res://sounds/Painsounds v2 - Track 4 - Arrggh .ogg"), 
-	preload("res://sounds/Painsounds v2 - Track 5 - Urggh.ogg"), 
+	preload("res://sounds/Painsounds v2 - Track 1 - Arrrch.ogg"),
+	preload("res://sounds/Painsounds v2 - Track 2 - Hurgh.ogg"),
+	preload("res://sounds/Painsounds v2 - Track 3 - Huuurh.ogg"),
+	preload("res://sounds/Painsounds v2 - Track 4 - Arrggh .ogg"),
+	preload("res://sounds/Painsounds v2 - Track 5 - Urggh.ogg"),
 	preload("res://sounds/Painsounds v2 - Track 6 - hyyrdhh.ogg")]
 
 @onready var hour_hand = $HourHand
@@ -35,6 +35,9 @@ var hour_count = 0
 var hour_can_fire = true
 var minute_count = 0
 var minute_can_fire = true
+
+var surge_time: float = 0.0
+var surge_time_remaining: float = 0.0
 
 func _init():
 	position = DisplayServer.window_get_size() / 2
@@ -61,25 +64,27 @@ func _physics_process(_delta):
 	if hour_hand.rotation_degrees > 360.0:
 		hour_hand.rotation_degrees -= 360.0
 		hour_count += 1
-	
+
 	if hour_hand.rotation_degrees < -360.0:
 		hour_hand.rotation_degrees += 360.0
 
 	if minute_hand.rotation_degrees > 360.0:
 		minute_hand.rotation_degrees -= 360.0
 		minute_count += 1
-	
+
 	if minute_hand.rotation_degrees < -360.0:
 		minute_hand.rotation_degrees += 360.0
 
-	
+
 	if Input.is_action_pressed("ui_accept") and minute_count >= 2:
 		$AudioStreamPlayer.stream = plugin
+		$AudioStreamPlayer.pitch_scale = 1.0
 		$AudioStreamPlayer.play()
 		is_surging = true
 		convert_hours_to_health()
 		hour_fire_timer.wait_time = 0.15
 		hand_rotate_ratio = 3.0
+		surge_time = minute_count / 2
 		$ActionSurgeTimer.wait_time = minute_count / 2
 		$ActionSurgeTimer.start()
 		minute_count = 0
@@ -107,6 +112,8 @@ func _physics_process(_delta):
 		bg_pew.global_position = $HourHand/WhereThePewHappens.global_position
 		bg_pew.rotation = $HourHand.rotation
 
+	surge_time_remaining = $ActionSurgeTimer.time_left
+
 
 func convert_hours_to_health():
 	curr_health += hour_count
@@ -127,6 +134,7 @@ func _on_area_2d_body_entered(body):
 	curr_health -= 1
 	$AnimationPlayer.play("hurt")
 	$AudioStreamPlayer.stream = hurt_sounds[rng.randi_range(0, hurt_sounds.size() - 1)]
+	$AudioStreamPlayer.pitch_scale = 1.8
 	$AudioStreamPlayer.play()
 	if (curr_health <= 0):
 		emit_signal('dead')
@@ -135,6 +143,7 @@ func _on_area_2d_body_entered(body):
 func _on_action_surge_timer_timeout():
 	is_surging = false
 	$AudioStreamPlayer.stream = plugout
+	$AudioStreamPlayer.pitch_scale = 1.0
 	$AudioStreamPlayer.play()
 	hour_fire_timer.wait_time = 0.25
 	hand_rotate_ratio = 6.0

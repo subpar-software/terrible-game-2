@@ -17,7 +17,5 @@ func _process(delta):
 	else:
 		zoom = Vector2(lerpf(zoom.x, 1.0, delta * 2), lerpf(zoom.y, 1.0, delta * 2))
 		offset = Vector2(
-			lerpf(offset.x, 576.0, delta * 4),
-			lerpf(offset.y, 324.0, delta * 4)
-		)
-
+			lerpf(offset.x, 0.0, delta * 4),
+			lerpf(offset.y, 0.0, delta * 4))

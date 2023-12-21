@@ -1,67 +1,103 @@
-[gd_scene load_steps=9 format=3 uid="uid://btrpbdfrtvdyp"]
+[gd_scene load_steps=12 format=3 uid="uid://btrpbdfrtvdyp"]
 
+[ext_resource type="Theme" uid="uid://b4atemhgbubb6" path="res://theme/clock_theme.tres" id="1_2ypmh"]
 [ext_resource type="Script" path="res://scenes/interfaces/play_ui.gd" id="1_p3xjv"]
 [ext_resource type="AudioStream" uid="uid://xtuqwoeajnef" path="res://music/the-80s-retrowave-synthwave-143303.mp3" id="2_yjso7"]
-[ext_resource type="Shader" path="res://shaders/rainbow.gdshader" id="3_fbpqy"]
-[ext_resource type="Texture2D" uid="uid://b4iwarohuci7o" path="res://images/inkpx-curved-text.png" id="4_lpojf"]
+[ext_resource type="Shader" path="res://shaders/rainbow_outline.gdshader" id="4_o4e3n"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sagk1"]
-shader = ExtResource("3_fbpqy")
-shader_parameter/strength = 0.5
-shader_parameter/speed = 0.5
-shader_parameter/angle = 15.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wxy1t"]
-shader = ExtResource("3_fbpqy")
-shader_parameter/strength = 0.5
-shader_parameter/speed = 0.5
-shader_parameter/angle = 0.0
-
-[sub_resource type="Animation" id="Animation_8ak83"]
-resource_name = "help_fade"
-length = 3.0
-step = 0.05
+[sub_resource type="Animation" id="Animation_3lopb"]
+resource_name = "increase_hour_count"
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Inkpx-curved-text:material:shader_parameter/angle")
+tracks/0/path = NodePath("HoursStatus:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [0.0, 360.0]
+"values": [Vector2(1, 1), Vector2(2, 2), Vector2(1, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Inkpx-curved-text:rotation")
+tracks/1/path = NodePath("HoursStatus:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [0.785398, 0.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Inkpx-curved-text:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 2.55, 2.6, 2.8, 2.85, 2.9, 2.95, 3),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [true, false, true, false, true, false, true, false]
+"values": [Color(1, 1, 1, 1), Color(0.866667, 0, 0.141176, 1), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_cf7yl"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3k8hp"]
 _data = {
-"help_fade": SubResource("Animation_8ak83")
+"increase_hour_count": SubResource("Animation_3lopb")
 }
+
+[sub_resource type="Animation" id="Animation_p6n86"]
+resource_name = "increase_minute_count"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MinutesStatus:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.25, 1.25), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MinutesStatus:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.862745, 0.0980392, 0.458824, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n2sjv"]
+_data = {
+"increase_minute_count": SubResource("Animation_p6n86")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1jiqu"]
+shader = ExtResource("4_o4e3n")
+shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/line_scale = 0.25
+shader_parameter/frequency = 0.1
+shader_parameter/light_offset = 0.50001
+shader_parameter/alpha = 0.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tntqb"]
+bg_color = Color(0.6, 0.6, 0.6, 0.0784314)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.407843, 0.00392157, 0.843137, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aftnq"]
+bg_color = Color(0.513726, 0.329412, 0.945098, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.407843, 0.00392157, 0.843137, 1)
 
 [node name="PlayUI" type="Node2D"]
 script = ExtResource("1_p3xjv")
@@ -71,60 +107,118 @@ stream = ExtResource("2_yjso7")
 volume_db = -15.0
 autoplay = true
 
-[node name="HourCountLabel" type="Label" parent="."]
-offset_left = 22.0
-offset_top = 18.0
-offset_right = 82.0
-offset_bottom = 44.0
-text = "Hour: 0
-"
+[node name="HoursStatus" type="Label" parent="."]
+custom_minimum_size = Vector2(60, 0)
+offset_left = 169.0
+offset_top = 25.0
+offset_right = 229.0
+offset_bottom = 54.0
+pivot_offset = Vector2(10, 14)
+theme = ExtResource("1_2ypmh")
+text = "000"
 
-[node name="MinuteCountLabel" type="Label" parent="."]
-offset_left = 22.0
-offset_top = 43.0
-offset_right = 95.0
-offset_bottom = 69.0
-text = "Minute: 0"
-
-[node name="DefenderHealthLabel" type="Label" parent="."]
-offset_left = 22.0
-offset_top = 68.0
-offset_right = 95.0
-offset_bottom = 94.0
-text = "Health: 0"
-
-[node name="RingsCountLabel" type="Label" parent="."]
-offset_left = 990.0
-offset_top = 21.0
-offset_right = 1120.0
-offset_bottom = 44.0
-text = "Rings: 0"
-
-[node name="ElapsedTimeLabel" type="Label" parent="."]
-offset_left = 990.0
-offset_top = 46.0
-offset_right = 1120.0
-offset_bottom = 69.0
-text = "Time: 0"
-
-[node name="SurgeAvailableLabel" type="RichTextLabel" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_sagk1")
-offset_left = 454.0
-offset_top = 2.0
-offset_right = 674.0
-offset_bottom = 38.0
-text = "Press Space for Action Surge"
-
-[node name="Inkpx-curved-text" type="Sprite2D" parent="."]
-visible = false
-modulate = Color(1, 1, 1, 0.8)
-material = SubResource("ShaderMaterial_wxy1t")
-position = Vector2(576, 324)
-rotation = 0.785398
-texture = ExtResource("4_lpojf")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="HourAnimation" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_cf7yl")
+"": SubResource("AnimationLibrary_3k8hp")
 }
+
+[node name="MinutesStatus" type="Label" parent="."]
+custom_minimum_size = Vector2(60, 0)
+offset_left = 169.0
+offset_top = 62.0
+offset_right = 229.0
+offset_bottom = 90.0
+pivot_offset = Vector2(11, 14)
+size_flags_horizontal = 4
+size_flags_stretch_ratio = 1.28
+theme = ExtResource("1_2ypmh")
+text = "000"
+
+[node name="MinuteAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_n2sjv")
+}
+
+[node name="ScoreStatus" type="RichTextLabel" parent="."]
+material = SubResource("ShaderMaterial_1jiqu")
+custom_minimum_size = Vector2(60, 0)
+offset_left = 899.0
+offset_top = 53.0
+offset_right = 994.0
+offset_bottom = 82.0
+theme = ExtResource("1_2ypmh")
+bbcode_enabled = true
+text = "[right]00000[/right]"
+
+[node name="TimePlayedStatus" type="Label" parent="."]
+material = SubResource("ShaderMaterial_1jiqu")
+custom_minimum_size = Vector2(100, 0)
+offset_left = 1048.0
+offset_top = 610.0
+offset_right = 1148.0
+offset_bottom = 639.0
+size_flags_horizontal = 3
+theme = ExtResource("1_2ypmh")
+text = "00:00"
+
+[node name="Container" type="MarginContainer" parent="."]
+offset_right = 1152.0
+offset_bottom = 120.0
+theme = ExtResource("1_2ypmh")
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="Top" type="HBoxContainer" parent="Container"]
+layout_mode = 2
+
+[node name="Left" type="VBoxContainer" parent="Container/Top"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HoursTitle" type="RichTextLabel" parent="Container/Top/Left"]
+material = SubResource("ShaderMaterial_1jiqu")
+layout_mode = 2
+size_flags_vertical = 3
+text = "Hours:"
+autowrap_mode = 0
+
+[node name="MinutesTitle" type="RichTextLabel" parent="Container/Top/Left"]
+material = SubResource("ShaderMaterial_1jiqu")
+layout_mode = 2
+size_flags_vertical = 3
+text = "Minutes:"
+autowrap_mode = 0
+
+[node name="Middle" type="VBoxContainer" parent="Container/Top"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Health" type="ProgressBar" parent="Container/Top/Middle"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 10.0
+step = 1.0
+value = 2.0
+show_percentage = false
+
+[node name="Surge" type="ProgressBar" parent="Container/Top/Middle"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_tntqb")
+theme_override_styles/fill = SubResource("StyleBoxFlat_aftnq")
+max_value = 10.0
+step = 0.25
+value = 2.0
+show_percentage = false
+
+[node name="ScoreTitle" type="RichTextLabel" parent="Container/Top"]
+material = SubResource("ShaderMaterial_1jiqu")
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[center]Score[/center]"

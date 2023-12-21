@@ -39,11 +39,12 @@ func start(elaspsed_time_node: Node):
 func _on_spawn_rate_timeout():
 	var current_spawn_position = spawn_points.get_child(current_spawn_point).global_position
 	var variance_vector = Vector2(
-		rng.randf_range(-varaince , varaince), 
+		rng.randf_range(-varaince , varaince),
 		rng.randf_range(-varaince , varaince))
 
 	Globals.current_rings += 1
 	Globals.total_rings += 1
+	Globals.enemies_spawned += 1
 	var ring = ring_enemy.instantiate()
 	ring.set_elapsed_time(elaspsed_time.elapsed)
 	ring.global_position = current_spawn_position + variance_vector

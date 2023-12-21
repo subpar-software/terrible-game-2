@@ -8,11 +8,14 @@ var prev_game_state: Constants.GameState = Constants.GameState.NONE
 var first_play = true
 var is_surging = false
 
+var title_ui_scene = preload("res://scenes/interfaces/title_ui.tscn")
+var title_ui: TitleUI
+
 var play_ui_scene = preload("res://scenes/interfaces/play_ui.tscn")
 var play_ui: PlayUI
 
-var title_ui_scene = preload("res://scenes/interfaces/title_ui.tscn")
-var title_ui: TitleUI
+var help_ui_scene = preload("res://scenes/interfaces/help_ui.tscn")
+var help_ui: HelpUI
 
 var defender_scene = preload("res://scenes/defender/defender.tscn")
 var defender: Node2D
@@ -23,6 +26,9 @@ var ring_manager
 @onready var elapsed_time = $ElapsedTime
 @onready var enemy_managers = $EnemyManagers
 
+var score_enemies_killed: int = 0
+
+
 func _process(_delta):
 	if (game_state != prev_game_state):
 		match game_state:
@@ -31,7 +37,7 @@ func _process(_delta):
 				title_ui.initialize(first_play, elapsed_time)
 				add_child(title_ui)
 				title_ui.start_game.connect(func(): game_state = Constants.GameState.PLAY)
-				
+
 			Constants.GameState.PLAY:
 				title_ui.queue_free()
 
@@ -46,8 +52,12 @@ func _process(_delta):
 				ring_manager.start(elapsed_time)
 
 				play_ui = play_ui_scene.instantiate()
-				play_ui.initialize(first_play, elapsed_time, defender)
+				play_ui.initialize(elapsed_time, defender)
 				add_child(play_ui)
+
+				help_ui = help_ui_scene.instantiate()
+				help_ui.initialize(first_play, elapsed_time, defender)
+				add_child(help_ui)
 				if first_play:
 					first_play = false
 
@@ -59,7 +69,8 @@ func _process(_delta):
 				defender.queue_free()
 				ring_manager.queue_free()
 				play_ui.queue_free()
-				
+				help_ui.queue_free()
+
 				title_ui = title_ui_scene.instantiate()
 				title_ui.initialize(first_play, elapsed_time)
 				add_child(title_ui)
@@ -69,6 +80,21 @@ func _process(_delta):
 	prev_game_state = game_state
 	if (game_state == Constants.GameState.NONE):
 		game_state = Constants.GameState.START
-	
+
 	if (game_state != Constants.GameState.PLAY and Input.is_action_just_pressed("ui_accept")):
 		game_state = Constants.GameState.PLAY
+
+	update_score()
+
+
+func update_score():
+	if (game_state == Constants.GameState.PLAY):
+		var enemies_killed_to_score: int = 0
+		if score_enemies_killed != Globals.enemies_killed:
+			enemies_killed_to_score = (Globals.enemies_killed - score_enemies_killed) * (5 if not is_surging else 25)
+			score_enemies_killed = Globals.enemies_killed
+
+		Globals.score += enemies_killed_to_score
+		return
+
+	Globals.score = 0

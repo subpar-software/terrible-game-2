@@ -1,0 +1,91 @@
+[gd_scene load_steps=8 format=3 uid="uid://03udf2k1gxim"]
+
+[ext_resource type="Script" path="res://scenes/interfaces/help_ui.gd" id="1_6v6pb"]
+[ext_resource type="Shader" path="res://shaders/rainbow.gdshader" id="3_w675e"]
+[ext_resource type="Texture2D" uid="uid://b4iwarohuci7o" path="res://images/inkpx-curved-text.png" id="4_r3qd8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sagk1"]
+shader = ExtResource("3_w675e")
+shader_parameter/strength = 0.5
+shader_parameter/speed = 0.5
+shader_parameter/angle = 15.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wxy1t"]
+shader = ExtResource("3_w675e")
+shader_parameter/strength = 0.5
+shader_parameter/speed = 0.5
+shader_parameter/angle = 0.0
+
+[sub_resource type="Animation" id="Animation_8ak83"]
+resource_name = "help_fade"
+length = 3.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Inkpx-curved-text:material:shader_parameter/angle")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 360.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Inkpx-curved-text:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.785398, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Inkpx-curved-text:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2.55, 2.6, 2.8, 2.85, 2.9, 2.95, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cf7yl"]
+_data = {
+"help_fade": SubResource("Animation_8ak83")
+}
+
+[node name="HelpUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_6v6pb")
+
+[node name="SurgeAvailableLabel" type="RichTextLabel" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_sagk1")
+layout_mode = 0
+offset_left = 454.0
+offset_top = 2.0
+offset_right = 674.0
+offset_bottom = 38.0
+text = "Press Space for Action Surge"
+
+[node name="Inkpx-curved-text" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.8)
+material = SubResource("ShaderMaterial_wxy1t")
+position = Vector2(576, 324)
+rotation = 0.785398
+texture = ExtResource("4_r3qd8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_cf7yl")
+}

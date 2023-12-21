@@ -28,6 +28,7 @@ func remove():
 	$CollisionShape2D.queue_free()
 	$Sprite2D.queue_free()
 	Globals.current_rings -= 1
+	Globals.enemies_killed += 1
 
 
 func _on_destroy_timer_timeout():
