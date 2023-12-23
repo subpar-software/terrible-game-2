@@ -40,7 +40,7 @@ var surge_time: float = 0.0
 var surge_time_remaining: float = 0.0
 
 func _init():
-	position = DisplayServer.window_get_size() / 2
+	position = Vector2(1152 / 2.0, 648 / 2.0)
 	curr_health = start_health
 
 
