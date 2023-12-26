@@ -26,6 +26,7 @@ var hurt_sounds = [
 @onready var hour_hand = $HourHand
 @onready var minute_hand = $MinuteHand
 @onready var second_hand = $SecondHand
+@onready var second_hand_collider = $SecondHand/CollisionShape2D
 @onready var hour_fire_timer = $HourHand/FireRate
 @onready var minute_fire_timer = $MinuteHand/FireRate
 
@@ -36,8 +37,9 @@ var hour_can_fire = true
 var minute_count = 0
 var minute_can_fire = true
 
-var surge_time: float = 0.0
+var surge_time: float = 1.0
 var surge_time_remaining: float = 0.0
+
 
 func _init():
 	position = Vector2(1152 / 2.0, 648 / 2.0)
@@ -45,8 +47,8 @@ func _init():
 
 
 func _ready():
-	$SecondHand.visible = false
-	$SecondHand/CollisionShape2D.disabled = true
+	second_hand.visible = false
+	second_hand_collider.disabled = true
 
 
 func _physics_process(_delta):

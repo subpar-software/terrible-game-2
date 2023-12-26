@@ -1,12 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://ml81ns4ra6gt"]
+[gd_scene load_steps=5 format=3 uid="uid://ml81ns4ra6gt"]
 
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_3x00i"]
 [ext_resource type="Script" path="res://scenes/game/camera_2d.gd" id="2_lavrl"]
 [ext_resource type="PackedScene" uid="uid://dscwcsk1xacdp" path="res://scenes/game/parallax_background.tscn" id="3_4q7ah"]
 [ext_resource type="Script" path="res://scenes/game/elapsed_time.gd" id="5_pfu6u"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ss7o4"]
-size = Vector2(384, 648)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_3x00i")
@@ -21,18 +18,3 @@ script = ExtResource("2_lavrl")
 script = ExtResource("5_pfu6u")
 
 [node name="EnemyManagers" type="Node" parent="."]
-
-[node name="RightTouchScreenButton" type="TouchScreenButton" parent="."]
-position = Vector2(960, 324)
-shape = SubResource("RectangleShape2D_ss7o4")
-action = "ui_right"
-
-[node name="MiddleTouchScreenButton" type="TouchScreenButton" parent="."]
-position = Vector2(576, 324)
-shape = SubResource("RectangleShape2D_ss7o4")
-action = "ui_accept"
-
-[node name="LeftTouchScreenButton" type="TouchScreenButton" parent="."]
-position = Vector2(192, 324)
-shape = SubResource("RectangleShape2D_ss7o4")
-action = "ui_left"

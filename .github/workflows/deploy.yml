@@ -7,7 +7,7 @@ on:
 
 env:
   BUTLER_API_KEY: ${{secrets.ITCHIO_API_KEY}}
-  ITCH_PROJECT_NAME: "weird-clock-thing"
+  ITCH_PROJECT_NAME: "weird-clock-game"
   ITCH_USERNAME: "deplicator"
 
 jobs:

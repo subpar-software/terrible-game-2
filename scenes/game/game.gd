@@ -17,6 +17,9 @@ var play_ui: PlayUI
 var help_ui_scene = preload("res://scenes/interfaces/help_ui.tscn")
 var help_ui: HelpUI
 
+var touch_areas_scene = preload("res://scenes/game/touch_areas.tscn")
+var touch_areas: Node2D
+
 var defender_scene = preload("res://scenes/defender/defender.tscn")
 var defender: Node2D
 
@@ -26,7 +29,11 @@ var ring_manager
 @onready var elapsed_time = $ElapsedTime
 @onready var enemy_managers = $EnemyManagers
 
-var score_enemies_killed: int = 0
+
+func _ready():
+	if OS.has_feature('web'):
+		touch_areas = touch_areas_scene.instantiate()
+		add_child(touch_areas)
 
 
 func _process(_delta):
@@ -34,7 +41,7 @@ func _process(_delta):
 		match game_state:
 			Constants.GameState.START:
 				title_ui = title_ui_scene.instantiate()
-				title_ui.initialize(first_play, elapsed_time)
+				title_ui.initialize(first_play)
 				add_child(title_ui)
 				title_ui.start_game.connect(func(): game_state = Constants.GameState.PLAY)
 
@@ -56,7 +63,7 @@ func _process(_delta):
 				add_child(play_ui)
 
 				help_ui = help_ui_scene.instantiate()
-				help_ui.initialize(first_play, elapsed_time, defender)
+				help_ui.initialize(elapsed_time, defender)
 				add_child(help_ui)
 				if first_play:
 					first_play = false
@@ -72,8 +79,9 @@ func _process(_delta):
 				help_ui.queue_free()
 
 				title_ui = title_ui_scene.instantiate()
-				title_ui.initialize(first_play, elapsed_time)
+				title_ui.initialize(first_play)
 				add_child(title_ui)
+				title_ui.start_game.connect(func(): game_state = Constants.GameState.PLAY)
 
 				elapsed_time.stop_timing()
 
@@ -83,18 +91,3 @@ func _process(_delta):
 
 	if (game_state != Constants.GameState.PLAY and Input.is_action_just_pressed("ui_accept")):
 		game_state = Constants.GameState.PLAY
-
-	update_score()
-
-
-func update_score():
-	if (game_state == Constants.GameState.PLAY):
-		var enemies_killed_to_score: int = 0
-		if score_enemies_killed != Globals.enemies_killed:
-			enemies_killed_to_score = (Globals.enemies_killed - score_enemies_killed) * (5 if not is_surging else 25)
-			score_enemies_killed = Globals.enemies_killed
-
-		Globals.score += enemies_killed_to_score
-		return
-
-	Globals.score = 0

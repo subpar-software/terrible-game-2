@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dv3modv7xfm7v"]
+[gd_scene load_steps=13 format=3 uid="uid://dv3modv7xfm7v"]
 
 [ext_resource type="Script" path="res://scenes/interfaces/title-ui.gd" id="1_6b8v1"]
 [ext_resource type="Theme" uid="uid://b4atemhgbubb6" path="res://theme/clock_theme.tres" id="1_euhif"]
@@ -37,6 +37,17 @@ shader_parameter/strength = 0.5
 shader_parameter/speed = 0.5
 shader_parameter/angle = 15.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f4ww5"]
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_retre"]
 shader = ExtResource("3_lu0ld")
 shader_parameter/strength = 0.5
@@ -44,11 +55,11 @@ shader_parameter/speed = 0.5
 shader_parameter/angle = 15.0
 
 [node name="TitleUI" type="Control"]
-custom_minimum_size = Vector2(1152, 648)
+custom_minimum_size = Vector2(1152, 1296)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
-offset_bottom = 648.0
+offset_bottom = 1296.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("1_euhif")
@@ -68,8 +79,8 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 
 [node name="Title" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="TitleBackLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/Title"]
 material = SubResource("ShaderMaterial_5r0fa")
@@ -124,7 +135,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/bold_font_size = 77
 bbcode_enabled = true
-text = "[b]Thing[/b]"
+text = "[b]Game[/b]"
 
 [node name="TitleFrontLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/Title/TitleBackLabel3"]
 custom_minimum_size = Vector2(375, 0)
@@ -139,7 +150,7 @@ grow_vertical = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/bold_font_size = 77
 bbcode_enabled = true
-text = "[b]Thing[/b]"
+text = "[b]Game[/b]"
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -147,51 +158,78 @@ size_flags_vertical = 3
 theme_override_constants/margin_left = 400
 theme_override_constants/margin_right = 400
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
+[node name="MenuButtons" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
 material = SubResource("ShaderMaterial_6q8r2")
 layout_mode = 2
+theme_override_constants/separation = 30
 
-[node name="GoButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="GoButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons"]
 material = SubResource("ShaderMaterial_5103s")
 layout_mode = 2
 text = "Go!"
 
-[node name="TimeLasted" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
-visible = false
-use_parent_material = true
+[node name="OptionsButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons"]
+material = SubResource("ShaderMaterial_5103s")
 layout_mode = 2
-size_flags_vertical = 10
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_f4ww5")
+text = "Options"
 
-[node name="TimeLastedTitleLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/TimeLasted"]
-use_parent_material = true
-custom_minimum_size = Vector2(300, 0)
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons"]
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-text = "[b]Time[/b] Played:"
 
-[node name="TimeLastedStatusLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/TimeLasted"]
-use_parent_material = true
+[node name="OptionsMenu" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons"]
 layout_mode = 2
-size_flags_horizontal = 10
-text = "0"
+theme_override_constants/separation = 50
 
-[node name="Score" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
-visible = false
-use_parent_material = true
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons/OptionsMenu"]
 layout_mode = 2
-size_flags_vertical = 2
+text = "← Back"
 
-[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Score"]
-use_parent_material = true
+[node name="AudioOptions" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons/OptionsMenu"]
 layout_mode = 2
-text = "Score: "
 
-[node name="Status" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Score"]
-use_parent_material = true
+[node name="MusicCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons/OptionsMenu/AudioOptions"]
 layout_mode = 2
-size_flags_horizontal = 10
-text = "00000"
+text = "Music"
+
+[node name="SoundsCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons/OptionsMenu/AudioOptions"]
+layout_mode = 2
+text = "Sounds"
+
+[node name="KeyBindOptions" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons/OptionsMenu"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons/OptionsMenu/KeyBindOptions"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons/OptionsMenu/KeyBindOptions/HBoxContainer"]
+layout_mode = 2
+text = "Turn Left"
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons/OptionsMenu/KeyBindOptions/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons/OptionsMenu/KeyBindOptions"]
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons/OptionsMenu/KeyBindOptions/HBoxContainer2"]
+layout_mode = 2
+text = "Turn Right"
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons/OptionsMenu/KeyBindOptions/HBoxContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons/OptionsMenu/KeyBindOptions"]
+layout_mode = 2
+
+[node name="Button3" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons/OptionsMenu/KeyBindOptions/HBoxContainer3"]
+layout_mode = 2
+text = "Surge"
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/MenuButtons/OptionsMenu/KeyBindOptions/HBoxContainer3"]
+layout_mode = 2
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_wv0bl")
@@ -272,5 +310,7 @@ text = "[center]You won't believe that you played![/center]"
 wait_time = 2.0
 autostart = true
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/GoButton" to="." method="_on_go_button_pressed"]
-[connection signal="timeout" from="Subtitles/Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/MenuButtons/GoButton" to="." method="_on_go_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/MenuButtons/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/MenuButtons/OptionsMenu/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="timeout" from="Subtitles/Timer" to="." method="_on_subtitle_timer_timeout"]

@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://blrq3omopasv4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ss7o4"]
+size = Vector2(384, 648)
+
+[node name="TouchAreas" type="Node2D"]
+
+[node name="RightTouchScreenButton" type="TouchScreenButton" parent="."]
+position = Vector2(960, 324)
+shape = SubResource("RectangleShape2D_ss7o4")
+action = "ui_right"
+
+[node name="MiddleTouchScreenButton" type="TouchScreenButton" parent="."]
+position = Vector2(576, 324)
+shape = SubResource("RectangleShape2D_ss7o4")
+action = "ui_accept"
+
+[node name="LeftTouchScreenButton" type="TouchScreenButton" parent="."]
+position = Vector2(192, 324)
+shape = SubResource("RectangleShape2D_ss7o4")
+action = "ui_left"

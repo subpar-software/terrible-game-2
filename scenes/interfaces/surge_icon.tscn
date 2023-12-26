@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bn2ywhdyox66j"]
+
+[ext_resource type="Texture2D" uid="uid://cg3e81kfmy6u2" path="res://images/icon-surge.png" id="1_meesf"]
+
+[node name="SurgeIcon" type="Sprite2D"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_meesf")

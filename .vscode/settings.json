@@ -1,3 +1,11 @@
 {
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
+    "editor.rulers": [100],
+    "[markdown]": {
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "always"
+        }
+    }
 }

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://8pene8q7jll7"]
+
+[ext_resource type="Texture2D" uid="uid://dyf61y4liauog" path="res://images/icon-health.png" id="1_k45ij"]
+
+[node name="HealthIcon" type="Sprite2D"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_k45ij")

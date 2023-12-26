@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Weird Clock Thing"
-config/description="I got nothing"
+config/name="Weird Clock Game"
+config/description="Indescribable Clock Action"
 run/main_scene="res://scenes/game/game.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://images/icon.svg"
